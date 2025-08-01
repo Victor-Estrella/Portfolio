@@ -1,0 +1,320 @@
+/* CSS exclusivo para o modal de projetos */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInModal 0.2s;
+}
+@keyframes fadeInModal {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.modal-content {
+    background: #18191a;
+    border-radius: 2.2rem;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    min-width: 32.5em;
+    max-width: 75em;
+    color: #fff;
+    position: relative;
+    box-shadow: 0 8px 32px 0 rgba(56,189,248,0.13);
+    animation: fadeInModal 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2.2rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.modal-image-col {
+    flex: 0 0 180px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.modal-image {
+    width: 35em;
+    height: auto;
+    border-radius: 1.2em;
+    margin-top: 5em;
+    box-shadow: 0 2px 16px 0 rgba(56,189,248,0.10);
+}
+
+.modal-image-native {
+    width: 16em;
+    height: auto;
+    border-radius: 1.2em;
+    margin-top: -1em;
+    margin-left: 2em;
+    box-shadow: 0 2px 16px 0 rgba(56,189,248,0.10);
+}
+
+.modal-info-col {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+}
+
+.modal-title{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 1.2rem;
+    text-align: center;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+.modal-close:hover {
+    opacity: 1;
+}
+.modal-stacks {
+    width: 100%;
+    margin: 1.2em 0 0.7em 2em;
+    font-size: 1.1rem;
+    display: flex;
+}
+.modal-stacks-container-span{
+    width: 100%;
+    margin-left: 0.5em;
+}
+.modal-stacks span {
+    color: #38BDF8;
+    font-weight: 600;
+}
+.modal-stacks-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2em;
+    margin-top: 2.5em;
+}
+.modal-stack-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.1rem;
+    min-width: 70px;
+}
+.modal-stack-icon i {
+    font-size: 2.2em;
+    margin-bottom: 0.2em;
+    filter: drop-shadow(0 2px 8px #23252644);
+}
+.modal-content p {
+    margin: 1.2em 0;
+    color: #bdbdbd;
+    font-size: 1.1rem;
+    text-align: center;
+}
+.modal-links {
+    display: flex;
+    width: 100%;
+    gap: 1.2em;
+    justify-content: center;
+    margin-top: 1.2em;
+}
+.modal-btn {
+    background: #38BDF8;
+    color: #fff;
+    border: none;
+    border-radius: 1.5em;
+    padding: 0.5em 1.5em;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    display: inline-block;
+}
+.modal-btn:hover {
+    background: #232526;
+    color: #38BDF8;
+}
+
+@media (max-width: 767px) {
+    .modal-content {
+        min-width: 85vw;
+        max-width: 94vw;
+        padding: 0.7rem 0.3rem 1.2rem 0.3rem;
+        border-radius: 1.2rem;
+    }
+    .modal-flex-row {
+        flex-direction: column;
+        gap: 0.7rem;
+        align-items: center;
+        width: 100%;
+    }
+    .modal-image-col {
+        flex: none;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 0.3em;
+    }
+    .modal-image {
+        min-width: 15em;
+        width: 20em;
+        margin-top: 0.5em;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0.7em;
+    }
+    .modal-image-native {
+        width: 7em;
+        margin-top: 0.3em;
+        margin-left: 0;
+        border-radius: 0.7em;
+    }
+    .modal-info-col {
+        align-items: center;
+        width: 80%;
+        min-width: 0;
+    }
+    .modal-title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5em;
+    }
+    .modal-close {
+        top: 0.3rem;
+        right: -0.7rem;
+        font-size: 1.5rem;
+    }
+    .modal-stacks {
+        margin: 0.7em 0 0.3em 0;
+        font-size: 0.95rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    .modal-stacks-icons {
+        gap: 0.4em;
+        margin-top: 1.5em;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .modal-stack-icon {
+        min-width: 40px;
+        font-size: 0.93rem;
+    }
+    .modal-stack-icon i {
+        font-size: 1.8em;
+    }
+    .modal-content p {
+        font-size: 0.93rem;
+        margin: 0.5em 0;
+        padding: 0 0.2em;
+    }
+    .modal-links {
+        gap: 0.4em;
+        margin-top: 0.5em;
+        flex-direction: column;
+        align-items: center;
+    }
+    .modal-btn {
+        font-size: 0.93rem;
+        padding: 0.3em 0.7em;
+        width: 8em;
+        display: flex;
+        justify-content: center;
+        max-width: 250px;
+        margin-bottom: 0.3em;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .modal-content {
+        min-width: 20em;
+        max-width: 38em;
+        padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+    }
+    .modal-flex-row {
+        flex-direction: column;
+        gap: 1.2rem;
+        align-items: center;
+    }
+    .modal-image-col {
+        flex: none;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 0.5em;
+    }
+    .modal-image {
+        max-width: 34em;
+        margin-top: 1em;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .modal-image-native {
+        width: 11em;
+        margin-top: 0.5em;
+        margin-left: 0;
+    }
+    .modal-info-col {
+        align-items: center;
+        width: 100%;
+        min-width: 0;
+    }
+    .modal-title {
+        font-size: 1.3rem;
+        margin-bottom: 0;
+    }
+    .modal-stacks {
+        margin: 1em 0 0.5em 0;
+        font-size: 1rem;
+        flex-direction: column;
+        align-items: center;
+    }
+    .modal-stacks-icons {
+        gap: 0.7em;
+        margin-top: 1.8em;
+    }
+    .modal-stack-icon {
+        min-width: 60px;
+        font-size: 1rem;
+    }
+    .modal-stack-icon i {
+        font-size: 1.5em;
+    }
+    .modal-content p {
+        font-size: 1rem;
+        margin: 0.7em 0;
+    }
+    .modal-links {
+        gap: 0.7em;
+        margin-top: 0.7em;
+    }
+    .modal-btn {
+        font-size: 1rem;
+        padding: 0.4em 1em;
+    }
+    .modal-close {
+        top: -1rem;
+        right: -1rem;
+        font-size: 2rem;
+    }
+}
