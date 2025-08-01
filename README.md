@@ -1,69 +1,57 @@
-# React + TypeScript + Vite
+# Meu Portfólio - Victor Henrique Estrella Carracci
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Portfólio moderno, responsivo e animado feito em React + TypeScript + Vite, com foco em UI/UX, animações e projetos reais.
 
-Currently, two official plugins are available:
+## 💻 Stacks & Ferramentas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React, TypeScript, Vite
+- Tailwind CSS, CSS Modules
+- React Bits (TextType, Particles)
+- Devicon, FontAwesome
 
-## Expanding the ESLint configuration
+## ✨ Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Layout responsivo (desktop, tablet, mobile)
+- Animações modernas e partículas
+- Cards de projetos com modal detalhado
+- Skills com ícones interativos
+- Seção de contato com links diretos
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📂 Projetos em Destaque
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 🧠 Enova Global Solution
+Solução para sustentabilidade e impacto social, integrando Next.js, Java e Python.
+[GitHub](https://github.com/Victor-Estrella/Enova) | [Site](https://enova-omega.vercel.app)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 🛡️ Porto Seguro Challenge
+Aplicação inovadora para a Porto Seguro, com React, Next.js, TypeScript e Java.
+[GitHub](https://github.com/Victor-Estrella/Porto-Seguro-Challenge) | [Site](https://challengeporto.vercel.app)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 🚲 SmartMottu (Mottu Challenge – FIAP)
+App mobile para localização de motos usando QR Code, mapas e visão computacional.
+[GitHub](https://github.com/Victor-Estrella/SmartMottu-Mobile)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 🏠 SafeHub (Global Solution – FIAP)
+Gestão de abrigos emergenciais, dashboard, mapa e alertas inteligentes.
+[GitHub](https://github.com/Victor-Estrella/SafeHub-Mobile)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🚀 Rodando Localmente
+
+1. Clone o repositório
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
+3. Rode o projeto:
+   ```bash
+   npm run dev
+   ```
+4. Acesse: [http://localhost:5173](http://localhost:5173)
+
+## 📱 Responsividade
+
+O portfólio é totalmente responsivo, adaptando-se para desktop, tablet e mobile.
+
+---
+
+Feito com 💙 por Victor Henrique Estrella Carracci
