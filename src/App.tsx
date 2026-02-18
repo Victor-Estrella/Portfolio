@@ -5,10 +5,12 @@ import Particles from '../Reactbits/Particles/Particles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
-import ProjectPreview from './components/EnovaPreview';
+import EnovaPreview from './components/EnovaPreview';
 import PortoSeguroPreview from './components/PortoSeguroPreview';
 import SmartMottuPreview from './components/SmartMottuPreview';
+
 import SafeHubPreview from './components/SafeHubPreview';
+import SoulBalancePreview from './components/SoulBalancePreview';
 
 
 
@@ -38,8 +40,8 @@ function App() {
         <div style={{ width: '100%', height: '720px', position: 'relative' }}>
           <Particles particleColors={['#8a8686', '#8a8686']} particleCount={400} particleSpread={20} speed={0.1} particleBaseSize={100} moveParticlesOnHover={false} alphaParticles={true} disableRotation={false} />
         </div>
-        <h1 className='home-titulo'>Olá, eu sou Victor Henrique Estrella Carracci!</h1>
-        <TextType text={["Desenvolvedor Front-End | React | TypeScript | Tailwind CSS", "Bem-vindo ao meu portfólio!"]}
+        <h1 className='home-titulo'>Olá, eu sou Victor Henrique Estrella Carracci</h1>
+        <TextType text={["Desenvolvedor Full Stack | React | React Native | Spring Boot | TypeScript", "Construindo aplicações web e mobile com integração real entre front-end e back-end"]}
           typingSpeed={30} pauseDuration={1500} deletingSpeed={20} showCursor={true} cursorCharacter="|" className='home-subtitulo' 
         />
       </section>
@@ -47,9 +49,11 @@ function App() {
       {/* Sobre Mim */}
       <section id="sobre" className="sobre-section">
         <h2 className='sobre-titulo'>Sobre Mim</h2>
-        <p className='sobre-descricao'>Sou um desenvolvedor front-end apaixonado por criar experiências digitais que unem design, performance e acessibilidade.
-          Atualmente curso Análise e Desenvolvimento de Sistemas na FIAP e tenho experiência em projetos acadêmicos e pessoais usando tecnologias como React, TypeScript, Tailwind CSS, APIs REST e integração com backend em Java.
-          Tenho familiaridade com ferramentas modernas, como React Native, Next.js, Docker e Figma. Valorizo boas práticas de código, trabalho em equipe e estou sempre em busca de evoluir como profissional.
+        <p className='sobre-descricao'>
+          Desenvolvedor Full Stack com foco em aplicações web e mobile utilizando React, React Native, TypeScript e Java com Spring Boot.
+          Tenho experiência na construção de sistemas com integração completa entre front-end e back-end, consumo e criação de APIs REST, persistência de dados e arquitetura modular.
+          Atuei em projetos envolvendo geolocalização, dashboards analíticos e integração com IA Generativa para recomendações personalizadas.
+          Valorizo código limpo, boas práticas (SOLID, Clean Code) e desenvolvimento orientado à performance e escalabilidade.
         </p>
 
       </section>
@@ -103,24 +107,8 @@ function App() {
               <i style={{ fontSize: '3rem' }} className="devicon-python-plain" title="Python"></i>
             </div>
             <div className='skill-icon'>
-              <p className='skill-texto'>Ruby</p>
-              <i style={{ fontSize: '3rem' }} className="devicon-ruby-plain" title="Ruby"></i>
-            </div>
-            <div className='skill-icon'>
-              <p className='skill-texto'>Ruby on Rails</p>
-              <i style={{ fontSize: '3rem' }} className="devicon-rails-plain" title="Ruby on Rails"></i>
-            </div>
-            <div className='skill-icon'>
               <p className='skill-texto'>SQL Developer</p>
               <i style={{ fontSize: '3rem' }} className="devicon-sqldeveloper-plain" title="SQL Developer"></i>
-            </div>
-            <div className='skill-icon'>
-              <p className='skill-texto'>Vue.js</p>
-              <i style={{ fontSize: '3rem' }} className="devicon-vuejs-plain" title="Vue.js"></i>
-            </div>
-            <div className='skill-icon'>
-              <p className='skill-texto'>Nuxt.js</p>
-              <i style={{ fontSize: '3rem' }} className="devicon-nuxtjs-plain" title="Nuxt.js"></i>
             </div>
             <div className='skill-icon'>
               <p className='skill-texto'>Git</p>
@@ -142,7 +130,7 @@ function App() {
         <h2 className='projetos-titulo'>Projetos</h2>
         <div className="projetos-cards-container">
           {/* Card Enova Global Solution */}
-          <ProjectPreview />
+          <EnovaPreview />
 
           {/* Card Porto Seguro Challenge */}
           <PortoSeguroPreview/>
@@ -152,6 +140,9 @@ function App() {
           
           {/* Card SafeHu/b */}
           <SafeHubPreview/>
+         
+           {/* Card SoulBalance */}
+           <SoulBalancePreview/>
         
         </div>
       </section>
@@ -161,14 +152,14 @@ function App() {
       <section id="contato" className="contato-section">
         <h2 className="contato-titulo">Contato</h2>
         <p className="contato-descricao">
-          Estou disponível para oportunidades como desenvolvedor front-end, freelas ou colaborações em projetos criativos.
+          Busco oportunidades como Desenvolvedor Full Stack Júnior para atuar em projetos reais. Também estou aberto a freelas e parcerias técnicas focadas em performance, escalabilidade e boas práticas.
         </p>
         <div className="contato-links">
           <a className="contato-link" href="mailto:victorhcarracci@gmail.com">
             <i className="devicon-google-plain" style={{ fontSize: '1.5em', color: '#EA4335' }}></i>
             Email
           </a>
-          <a className="contato-link" href="https://www.linkedin.com/in/victor-carracci-29ba67296" target="_blank" rel="noopener noreferrer">
+          <a className="contato-link" href="https://www.linkedin.com/in/victorcarracci/" target="_blank" rel="noopener noreferrer">
             <i className="devicon-linkedin-plain" style={{ fontSize: '1.5em', color: '#0A66C2' }}></i>
             LinkedIn
           </a>
