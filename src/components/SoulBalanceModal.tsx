@@ -1,5 +1,5 @@
 import '../styles/ProjectModal.css';
-import SoulBalance from '../assets/SoulBalance.png';
+import SoulBalance from '../assets/soulbalance.png';
 import gemini from '../assets/gemini.webp';
 
 interface SoulBalanceModalProps {
