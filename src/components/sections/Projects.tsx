@@ -19,9 +19,9 @@ export default function Projects() {
   }
 
   return (
-    <section id="projetos" className="relative scroll-mt-24 px-4 py-24 sm:py-32">
+    <section id="projetos" className="relative overflow-hidden px-4 py-20 sm:py-28">
       <div
-        className="pointer-events-none absolute top-0 left-1/2 size-[34rem] -translate-x-1/2 rounded-full bg-primary/8 blur-[160px]"
+        className="pointer-events-none absolute top-0 left-1/2 size-[18rem] -translate-x-1/2 rounded-full bg-primary/8 blur-[110px] sm:size-[34rem] sm:blur-[160px]"
         aria-hidden
       />
 
@@ -32,7 +32,7 @@ export default function Projects() {
           description="Cada projeto nasceu de um problema real — clique em um card para ver os detalhes técnicos."
         />
 
-        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-4 sm:mt-16 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {projects.map((project, index) => (
             <ProjectCard
               key={project.slug}

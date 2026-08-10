@@ -2,23 +2,28 @@ export const profile = {
   name: 'Victor Henrique Estrella Carracci',
   shortName: 'Victor Estrella',
   initials: 'VE',
-  role: 'Desenvolvedor Full Stack',
-  headline: 'Desenvolvedor Full Stack | React · React Native · Spring Boot · TypeScript',
+  role: 'Desenvolvedor Front-End',
+  headline: 'Desenvolvedor Front-End | React · React Native · Next.js · TypeScript',
   location: 'São Paulo — SP, Brasil',
-  available: true,
-  availableLabel: 'Disponível para oportunidades',
+  objective: 'Estágio / Desenvolvedor Júnior em Desenvolvimento de Software',
 
-  /**
-   * Coloque o PDF do currículo em `public/curriculo.pdf`.
-   * Se ficar `null`, o botão de currículo some do header automaticamente.
-   */
-  resumeUrl: '/curriculo.pdf' as string | null,
+  /** PDF servido de `public/` — o link usa `download`, então o navegador baixa direto. */
+  resumeUrl: '/curriculo-victor-carracci.pdf',
+  resumeFileName: 'Curriculo-Victor-Carracci.pdf',
+
+  /** Frases digitadas no Hero (componente TextType) */
+  typewriter: [
+    'Desenvolvedor Front-End | React · React Native · Next.js',
+    'Interfaces responsivas e integração com APIs REST',
+    'Clean Code, SOLID e foco na experiência do usuário',
+  ] as string[],
 
   bio: [
-    'Desenvolvedor Full Stack com foco em aplicações web e mobile utilizando React, React Native, TypeScript e Java com Spring Boot.',
-    'Tenho experiência na construção de sistemas com integração completa entre front-end e back-end, consumo e criação de APIs REST, persistência de dados e arquitetura modular. Atuei em projetos envolvendo geolocalização, dashboards analíticos e integração com IA Generativa para recomendações personalizadas.',
-    'Valorizo código limpo, boas práticas (SOLID, Clean Code) e desenvolvimento orientado à performance e escalabilidade.',
+    'Desenvolvedor Front-End com experiência profissional no desenvolvimento de aplicações web e mobile utilizando React, React Native, Next.js e TypeScript.',
+    'Atuo na criação de interfaces responsivas e reutilizáveis, integração com APIs REST, desenvolvimento de novas funcionalidades e manutenção de sistemas — incluindo correção de bugs e otimização de performance.',
+    'Tenho conhecimentos em JavaScript, Tailwind CSS, Git, Docker e boas práticas como Clean Code e SOLID. Busco contribuir com soluções escaláveis, de qualidade e com foco na experiência do usuário.',
   ],
+
 
   contact: {
     email: 'victorhcarracci@gmail.com',
@@ -38,8 +43,8 @@ export const navLinks = [
 ] as const
 
 export const stats = [
-  { value: 5, suffix: '+', label: 'Projetos entregues' },
-  { value: 2, suffix: '+', label: 'Anos codando' },
-  { value: 15, suffix: '+', label: 'Tecnologias' },
+  { value: 6, suffix: '', label: 'Projetos entregues' },
   { value: 3, suffix: '', label: 'Apps mobile' },
+  { value: 16, suffix: '+', label: 'Tecnologias' },
+  { value: 2, suffix: '+', label: 'Anos codando' },
 ] as const

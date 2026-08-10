@@ -11,9 +11,6 @@ export default function Footer() {
     <footer className="relative border-t border-white/6 px-4 py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 sm:flex-row">
         <div className="flex items-center gap-3">
-          <span className="grid size-9 place-items-center rounded-full bg-[linear-gradient(135deg,var(--primary),var(--accent))] text-sm font-bold text-primary-foreground">
-            {profile.initials}
-          </span>
           <div className="text-sm">
             <p className="font-medium">{profile.shortName}</p>
             <p className="text-xs text-muted-foreground">

@@ -30,25 +30,24 @@ export default function ProjectDialog({ project, open, onOpenChange }: ProjectDi
           {/* Mídia */}
           <div
             className={cn(
-              'relative flex items-center justify-center overflow-hidden border-b border-white/6 p-6 md:rounded-l-3xl md:border-r md:border-b-0',
+              'relative flex items-center justify-center overflow-hidden border-b border-white/6 p-4 sm:p-6 md:rounded-l-3xl md:border-r md:border-b-0',
               'bg-[radial-gradient(circle_at_50%_0%,color-mix(in_oklch,var(--primary)_20%,transparent),transparent_65%)]'
             )}
           >
-            <div className="pointer-events-none absolute inset-0 grid-bg opacity-30" aria-hidden />
             <img
               src={project.image}
               alt={`Prévia do projeto ${project.name}`}
               className={cn(
                 'relative rounded-xl shadow-2xl shadow-black/50',
                 project.shot === 'mobile'
-                  ? 'max-h-[22rem] w-auto object-contain md:max-h-[26rem]'
+                  ? 'max-h-[15rem] w-auto object-contain sm:max-h-[20rem] md:max-h-[26rem]'
                   : 'w-full object-cover'
               )}
             />
           </div>
 
           {/* Info */}
-          <div className="flex flex-col gap-5 p-6 sm:p-8">
+          <div className="flex flex-col gap-5 p-5 sm:p-7 lg:p-8">
             <DialogHeader>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant={project.type === 'mobile' ? 'accent' : 'default'}>
@@ -99,7 +98,7 @@ export default function ProjectDialog({ project, open, onOpenChange }: ProjectDi
             </div>
 
             {/* Links */}
-            <div className="mt-auto flex flex-wrap gap-2 pt-2">
+            <div className="mt-auto flex flex-col gap-2 pt-2 sm:flex-row sm:flex-wrap">
               {project.links.github && (
                 <Button
                   variant="outline"

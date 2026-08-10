@@ -13,12 +13,6 @@ function App() {
   return (
     <ClickSpark sparkColor="#38bdf8" sparkCount={8} sparkRadius={20} duration={450}>
       <div className="relative min-h-screen bg-background">
-        {/* textura sutil de fundo em toda a página */}
-        <div
-          className="pointer-events-none fixed inset-0 z-0 opacity-18 grid-bg [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]"
-          aria-hidden
-        />
-
         <Navbar />
 
         <main className="relative z-10">

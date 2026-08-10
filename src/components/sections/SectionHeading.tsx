@@ -34,14 +34,14 @@ export default function SectionHeading({
         {eyebrow}
       </span>
 
-      <h2 className="font-display text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+      <h2 className="font-display text-2xl leading-tight font-bold tracking-tight text-balance min-[420px]:text-3xl sm:text-4xl lg:text-5xl">
         {title}
       </h2>
 
       {description && (
         <p
           className={cn(
-            'max-w-2xl text-sm leading-relaxed text-muted-foreground text-pretty sm:text-base',
+            'max-w-2xl text-[0.9rem] leading-relaxed text-muted-foreground text-pretty sm:text-base',
             align === 'center' && 'mx-auto'
           )}
         >

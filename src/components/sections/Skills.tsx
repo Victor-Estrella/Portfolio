@@ -32,9 +32,9 @@ export default function Skills() {
   )
 
   return (
-    <section id="skills" className="relative scroll-mt-24 overflow-hidden px-4 py-24 sm:py-32">
+    <section id="skills" className="relative overflow-hidden px-4 py-20 sm:py-28">
       <div
-        className="pointer-events-none absolute top-1/3 right-[-10%] size-[28rem] rounded-full bg-accent/10 blur-[150px]"
+        className="pointer-events-none absolute top-1/3 right-[-10%] size-[16rem] rounded-full bg-accent/10 blur-[110px] sm:size-[28rem] sm:blur-[150px]"
         aria-hidden
       />
 
@@ -46,7 +46,7 @@ export default function Skills() {
         />
 
         {/* Filtros */}
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-2 sm:mt-12">
           {skillCategories.map((cat) => (
             <button
               key={cat.id}
@@ -70,7 +70,7 @@ export default function Skills() {
 
         {/* Grid */}
         <TooltipProvider>
-          <motion.div layout className="mt-10 grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+          <motion.div layout className="mt-8 grid grid-cols-3 gap-2.5 sm:mt-10 sm:grid-cols-4 sm:gap-3 md:grid-cols-5 lg:grid-cols-6">
             <AnimatePresence mode="popLayout">
               {filtered.map((skill, i) => (
                 <motion.div
@@ -86,7 +86,7 @@ export default function Skills() {
                       <div className="group relative flex aspect-square cursor-default flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-white/7 bg-card/40 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/30 hover:bg-card/80 hover:shadow-[0_18px_45px_-22px_var(--primary)]">
                         <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,color-mix(in_oklch,var(--primary)_22%,transparent),transparent_65%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                         <i
-                          className={cn(skill.icon, 'relative text-3xl transition-transform duration-300 group-hover:scale-115 sm:text-4xl')}
+                          className={cn(skill.icon, 'relative text-[2rem] transition-transform duration-300 group-hover:scale-115 sm:text-4xl')}
                           aria-hidden
                         />
                         <span className="relative px-1 text-center text-[11px] leading-tight font-medium text-muted-foreground transition-colors group-hover:text-foreground">
@@ -104,12 +104,12 @@ export default function Skills() {
       </div>
 
       {/* Marquee infinito */}
-      <div className="mask-fade-x mt-16 flex overflow-hidden select-none" aria-hidden>
+      <div className="mask-fade-x mt-12 flex overflow-hidden select-none sm:mt-16" aria-hidden>
         <div className="flex w-max animate-marquee items-center gap-4 pr-4 hover:[animation-play-state:paused]">
           {[...marqueeItems, ...marqueeItems].map((item, i) => (
             <span
               key={`${item}-${i}`}
-              className="flex items-center gap-4 font-display text-xl font-medium whitespace-nowrap text-muted-foreground/45 sm:text-2xl"
+              className="flex items-center gap-4 font-display text-lg font-medium whitespace-nowrap text-muted-foreground/45 sm:text-2xl"
             >
               {item}
               <span className="size-1.5 rounded-full bg-primary/50" />

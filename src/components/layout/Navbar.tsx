@@ -4,7 +4,7 @@ import { ArrowUpRight, Download, Menu, X } from 'lucide-react'
 
 import { Github, Linkedin } from '@/components/icons'
 
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { navLinks, profile } from '@/data/profile'
 import { useActiveSection } from '@/hooks/useActiveSection'
@@ -57,16 +57,16 @@ export default function Navbar() {
             className="group flex shrink-0 items-center gap-2.5 rounded-full pr-2 pl-1 outline-none"
             aria-label="Ir para o início"
           >
-            <span className="hidden text-sm font-semibold tracking-tight sm:block">
+            <span className="text-sm font-semibold tracking-tight">
               {profile.shortName}
-              <span className="block text-[11px] font-normal text-muted-foreground">
+              <span className="hidden text-[11px] font-normal text-muted-foreground sm:block">
                 {profile.role}
               </span>
             </span>
           </button>
 
           {/* Links (desktop) */}
-          <ul className="hidden items-center gap-1 md:flex">
+          <ul className="hidden items-center gap-1 lg:flex">
             {navLinks.map((link) => {
               const isActive = active === link.id
               return (
@@ -113,19 +113,16 @@ export default function Navbar() {
               <Linkedin className="size-4.5" />
             </a>
 
-            {profile.resumeUrl && (
-              <Button
-                size="sm"
-                variant="outline"
-                className="hidden lg:inline-flex"
-                onClick={() => window.open(profile.resumeUrl!, '_blank', 'noopener')}
-              >
-                <Download className="size-3.5" />
-                Currículo
-              </Button>
-            )}
+            <a
+              href={profile.resumeUrl}
+              download={profile.resumeFileName}
+              className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'hidden xl:inline-flex')}
+            >
+              <Download className="size-3.5" />
+              Currículo
+            </a>
 
-            <Button size="sm" variant="gradient" className="hidden md:inline-flex" onClick={() => goTo('contato')}>
+            <Button size="sm" variant="gradient" className="hidden lg:inline-flex" onClick={() => goTo('contato')}>
               Contato
               <ArrowUpRight className="size-3.5" />
             </Button>
@@ -135,7 +132,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
               aria-expanded={menuOpen}
-              className="grid size-9 place-items-center rounded-full border border-white/10 bg-white/4 text-foreground transition-colors hover:bg-white/9 md:hidden"
+              className="grid size-9 place-items-center rounded-full border border-white/10 bg-white/4 text-foreground transition-colors hover:bg-white/9 lg:hidden"
             >
               {menuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
             </button>
@@ -151,7 +148,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-background/90 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 z-40 bg-background/90 backdrop-blur-xl lg:hidden"
             onClick={() => setMenuOpen(false)}
           >
             <motion.ul
@@ -206,17 +203,14 @@ export default function Navbar() {
                 >
                   <Linkedin className="size-5" />
                 </a>
-                {profile.resumeUrl && (
-                  <a
-                    href={profile.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-11 items-center gap-2 rounded-full border border-white/10 bg-white/4 px-5 text-sm font-medium"
-                  >
-                    <Download className="size-4" />
-                    Currículo
-                  </a>
-                )}
+                <a
+                  href={profile.resumeUrl}
+                  download={profile.resumeFileName}
+                  className="inline-flex h-11 items-center gap-2 rounded-full border border-white/10 bg-white/4 px-5 text-sm font-medium"
+                >
+                  <Download className="size-4" />
+                  Currículo
+                </a>
               </motion.li>
             </motion.ul>
           </motion.div>

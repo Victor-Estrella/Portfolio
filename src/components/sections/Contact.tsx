@@ -2,12 +2,13 @@ import { useState } from 'react'
 import { motion } from 'motion/react'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ArrowUpRight, Check, Copy, Mail, MapPin } from 'lucide-react'
+import { ArrowUpRight, Check, Copy, Download, Mail, MapPin } from 'lucide-react'
 
 import { Github, Linkedin } from '@/components/icons'
 
 import SectionHeading from '@/components/sections/SectionHeading'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { profile } from '@/data/profile'
 import AnimatedContent from '@reactbits/AnimatedContent/AnimatedContent'
 import SpotlightCard from '@reactbits/SpotlightCard/SpotlightCard'
@@ -53,9 +54,9 @@ export default function Contact() {
   }
 
   return (
-    <section id="contato" className="relative scroll-mt-24 px-4 py-24 sm:py-32">
+    <section id="contato" className="relative overflow-hidden px-4 py-20 sm:py-28">
       <div
-        className="pointer-events-none absolute bottom-0 left-1/2 size-[36rem] -translate-x-1/2 rounded-full bg-accent/10 blur-[160px]"
+        className="pointer-events-none absolute bottom-0 left-1/2 size-[18rem] -translate-x-1/2 rounded-full bg-accent/10 blur-[110px] sm:size-[36rem] sm:blur-[160px]"
         aria-hidden
       />
 
@@ -63,15 +64,15 @@ export default function Contact() {
         <SectionHeading
           eyebrow="Contato"
           title="Vamos construir algo juntos?"
-          description="Busco oportunidades como Desenvolvedor Full Stack Júnior e estou aberto a freelas e parcerias técnicas focadas em performance, escalabilidade e boas práticas."
+          description="Busco oportunidades como Desenvolvedor Front-End Júnior e estou aberto a freelas e parcerias técnicas focadas em interface, performance e boas práticas."
         />
 
-        <AnimatedContent distance={50} duration={0.8} className="mt-14">
+        <AnimatedContent distance={50} duration={0.8} className="mt-12 sm:mt-14">
           <SpotlightCard
-            className="rounded-3xl border border-white/7 bg-card/50 p-7 backdrop-blur-sm sm:p-10"
+            className="rounded-3xl border border-white/7 bg-card/50 p-5 backdrop-blur-sm sm:p-7 lg:p-10"
             spotlightColor="rgba(167, 139, 250, 0.18)"
           >
-            <div className="relative z-2 grid gap-8 md:grid-cols-[1.1fr_1fr]">
+            <div className="relative z-2 grid gap-7 md:grid-cols-[1.1fr_1fr] md:gap-8">
               {/* CTA principal */}
               <div className="flex flex-col justify-between gap-6">
                 <div>
@@ -87,19 +88,21 @@ export default function Contact() {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-2.5">
+                <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
                   <Button
                     size="lg"
                     variant="gradient"
+                    className="w-full sm:w-auto"
                     onClick={() => window.open(profile.contact.whatsapp, '_blank', 'noopener,noreferrer')}
                   >
                     <FontAwesomeIcon icon={faWhatsapp} className="size-4" />
                     WhatsApp
                   </Button>
-                  <Button size="lg" variant="outline" onClick={copyEmail}>
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={copyEmail}>
                     {copied ? <Check className="size-4 text-emerald-400" /> : <Copy className="size-4" />}
                     {copied ? 'Email copiado!' : 'Copiar email'}
                   </Button>
+                  
                 </div>
               </div>
 

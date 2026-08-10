@@ -36,10 +36,10 @@ export const projects: Project[] = [
   {
     slug: 'enova',
     name: 'Enova',
-    tagline: 'Plataforma de dados ambientais para a Global Solution da FIAP',
+    tagline: 'Plataforma web para monitoramento de energia renovável',
     description:
-      'Solução desenvolvida para a Global Solutions da FIAP com foco em sustentabilidade e impacto social. O projeto integrou frontend em Next.js com backend em Java e APIs Python para análise e visualização de dados ambientais. Participação em time multidisciplinar com foco em automação e acessibilidade.',
-    year: '2025',
+      'Plataforma para monitoramento e gestão de sistemas de energia renovável, desenvolvida para a Global Solution da FIAP. Atuei como Desenvolvedor Front-End refatorando a SPA para SSR com Next.js, o que aumentou desempenho e SEO, além de construir a interface responsiva e integrar as APIs de análise de dados energéticos.',
+    year: 'Dez/2024',
     type: 'web',
     shot: 'desktop',
     image: enova,
@@ -52,9 +52,9 @@ export const projects: Project[] = [
       { name: 'Python', icon: 'devicon-python-plain colored' },
     ],
     highlights: [
-      'Integração de front-end Next.js com back-end Java e APIs Python',
-      'Visualização de dados ambientais com foco em acessibilidade',
-      'Trabalho em time multidisciplinar com automação de processos',
+      'Refatoração de SPA para SSR (Next.js), melhorando desempenho e SEO',
+      'Interface responsiva com Next.js e Tailwind CSS',
+      'Cálculos de eficiência energética com Python e Java + dashboard de métricas',
     ],
     links: {
       github: 'https://github.com/Victor-Estrella/Enova',
@@ -119,10 +119,10 @@ export const projects: Project[] = [
   {
     slug: 'smartmottu',
     name: 'SmartMottu',
-    tagline: 'Localização de motos em pátios com mapa interativo',
+    tagline: 'Mapeamento inteligente de pátio com QR Code e visão computacional',
     description:
-      'Aplicativo mobile criado para solucionar o principal problema interno da Mottu: a dificuldade de localizar motos nos pátios, especialmente quando não possuem placas ou quando o GPS está inativo. O app conta com um mapa interativo e integração futura com modelos de IA para reconhecimento visual, otimizando a rotina dos operadores.',
-    year: '2025',
+      'Aplicativo para mapeamento inteligente de pátio e gestão de motos, criado para resolver a dificuldade de localizar veículos sem placa ou com GPS inativo. Combina leitura de QR Code, visão computacional e mapa interativo, com backend próprio em Java Spring Boot e banco Oracle SQL.',
+    year: 'Mai/2025',
     type: 'mobile',
     shot: 'mobile',
     image: smartmottu,
@@ -133,9 +133,9 @@ export const projects: Project[] = [
       { name: 'CSS-In-JS', icon: 'devicon-css3-plain colored' },
     ],
     highlights: [
-      'Mapa interativo para rastrear motos sem placa ou GPS',
-      'Arquitetura preparada para reconhecimento visual por IA',
-      'Fluxo desenhado a partir da rotina real dos operadores',
+      'Gestão de motos com QR Code, visão computacional e mapa interativo',
+      'Formulários com estado e armazenamento local via AsyncStorage',
+      'Integração com backend Java Spring Boot e banco Oracle SQL',
     ],
     links: {
       github: 'https://github.com/Victor-Estrella/SmartMottu-Mobile',
@@ -144,10 +144,10 @@ export const projects: Project[] = [
   {
     slug: 'safehub',
     name: 'SafeHub',
-    tagline: 'Gestão de abrigos emergenciais em situações de crise',
+    tagline: 'Cadastro e mapeamento de abrigos com geolocalização',
     description:
-      'Aplicativo desenvolvido para facilitar a gestão de abrigos emergenciais em situações de crise. Com funcionalidades como cadastro de abrigo, controle de estoque, dashboard, mapa com geolocalização e sistema de alertas por cor de pino (baseado na ocupação), o SafeHub ajuda na organização e monitoramento eficiente de recursos.',
-    year: '2025',
+      'Aplicativo para cadastro e mapeamento de abrigos emergenciais em desastres naturais, com status de ocupação e controle de estoque. Inclui geocodificação de endereços em coordenadas, cálculo de rotas e alertas por cor de pino conforme a lotação de cada abrigo.',
+    year: 'Jun/2025',
     type: 'mobile',
     shot: 'mobile',
     image: safehub,
@@ -158,9 +158,9 @@ export const projects: Project[] = [
       { name: 'CSS-In-JS', icon: 'devicon-css3-plain colored' },
     ],
     highlights: [
-      'Dashboard com controle de estoque e ocupação em tempo real',
-      'Mapa com geolocalização e alertas por cor de pino',
-      'Cadastro completo de abrigos e recursos disponíveis',
+      'Geocodificação de endereços em coordenadas para o mapa',
+      'Integração com OpenStreetMap, Nominatim e OpenRouteService para rotas',
+      'Controle de estoque e status de ocupação com alertas por cor de pino',
     ],
     links: {
       github: 'https://github.com/Victor-Estrella/SafeHub-Mobile',

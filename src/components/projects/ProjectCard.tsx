@@ -80,13 +80,13 @@ export default function ProjectCard({ project, index, onOpen }: ProjectCardProps
           className="pointer-events-none absolute inset-0 z-1 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
         />
 
-        {/* Preview */}
+        {/* Preview — mesma proporção nos dois formatos para os cards alinharem */}
         <div
           className={cn(
-            'relative overflow-hidden border-b border-white/6',
+            'relative aspect-2/1 overflow-hidden border-b border-white/6',
             project.shot === 'mobile'
-              ? 'flex h-52 items-center justify-center bg-[radial-gradient(circle_at_50%_120%,color-mix(in_oklch,var(--primary)_22%,transparent),transparent_60%)]'
-              : 'aspect-16/10 bg-black/40'
+              ? 'flex items-center justify-center bg-[radial-gradient(circle_at_50%_115%,color-mix(in_oklch,var(--primary)_22%,transparent),transparent_62%)]'
+              : 'bg-black/40'
           )}
         >
           <img
@@ -97,7 +97,7 @@ export default function ProjectCard({ project, index, onOpen }: ProjectCardProps
             className={cn(
               'transition-transform duration-700 ease-out group-hover:scale-[1.06]',
               project.shot === 'mobile'
-                ? 'h-[115%] w-auto translate-y-6 rounded-xl object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.55)]'
+                ? 'h-[135%] w-auto translate-y-10 rounded-xl object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.55)]'
                 : 'size-full object-cover object-top'
             )}
           />
@@ -113,9 +113,9 @@ export default function ProjectCard({ project, index, onOpen }: ProjectCardProps
         </div>
 
         {/* Conteúdo */}
-        <div className="relative z-2 flex flex-1 flex-col gap-3 p-6">
+        <div className="relative z-2 flex flex-1 flex-col gap-3 p-5 sm:p-6">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="font-display text-xl font-bold tracking-tight">{project.name}</h3>
+            <h3 className="font-display text-lg font-bold tracking-tight sm:text-xl">{project.name}</h3>
             <span className="grid size-8 shrink-0 place-items-center rounded-full border border-white/10 bg-white/4 text-muted-foreground transition-all duration-300 group-hover:border-primary/40 group-hover:bg-primary/15 group-hover:text-primary">
               <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:rotate-45" />
             </span>
