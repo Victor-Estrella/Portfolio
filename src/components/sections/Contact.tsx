@@ -2,13 +2,12 @@ import { useState } from 'react'
 import { motion } from 'motion/react'
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ArrowUpRight, Check, Copy, Download, Mail, MapPin } from 'lucide-react'
+import { ArrowUpRight, Check, Copy, Mail, MapPin } from 'lucide-react'
 
 import { Github, Linkedin } from '@/components/icons'
 
 import SectionHeading from '@/components/sections/SectionHeading'
-import { Button, buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 import { profile } from '@/data/profile'
 import AnimatedContent from '@reactbits/AnimatedContent/AnimatedContent'
 import SpotlightCard from '@reactbits/SpotlightCard/SpotlightCard'
@@ -102,7 +101,6 @@ export default function Contact() {
                     {copied ? <Check className="size-4 text-emerald-400" /> : <Copy className="size-4" />}
                     {copied ? 'Email copiado!' : 'Copiar email'}
                   </Button>
-                  
                 </div>
               </div>
 
