@@ -1,115 +1,140 @@
-import { useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { motion } from 'motion/react'
+import { Monitor, Smartphone } from 'lucide-react'
 
 import SectionHeading from '@/components/sections/SectionHeading'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import TechIcon from '@/components/TechIcon'
 import { cn } from '@/lib/utils'
-import { skillCategories, skills, type SkillCategory } from '@/data/skills'
+import { coreSkills, focusAreas, skillGroups } from '@/data/skills'
+import SpotlightCard from '@reactbits/SpotlightCard/SpotlightCard'
 
-const marqueeItems = [
-  'React',
-  'TypeScript',
-  'Next.js',
-  'React Native',
-  'Spring Boot',
-  'Node.js',
-  'Tailwind CSS',
-  'Java',
-  'Python',
-  'Docker',
-  'Git',
-  'REST API',
-  'Clean Code',
-  'SOLID',
-]
+const ease = [0.22, 1, 0.36, 1] as const
+const areaIcon = { front: Monitor, mobile: Smartphone }
+
+const marqueeItems = [...coreSkills.map((s) => s.name), 'Tailwind CSS', 'REST APIs', 'Git', 'Clean Code', 'SOLID']
 
 export default function Skills() {
-  const [category, setCategory] = useState<SkillCategory>('all')
-
-  const filtered = useMemo(
-    () => (category === 'all' ? skills : skills.filter((s) => s.category === category)),
-    [category]
-  )
-
   return (
-    <section id="skills" className="relative overflow-hidden px-4 py-20 sm:py-28">
+    <section id="skills" className="relative overflow-hidden px-4 py-24 sm:py-32">
       <div
-        className="pointer-events-none absolute top-1/3 right-[-10%] size-[16rem] rounded-full bg-accent/10 blur-[110px] sm:size-[28rem] sm:blur-[150px]"
+        className="pointer-events-none absolute top-1/3 right-[-10%] size-[16rem] rounded-full bg-accent/10 blur-[110px] glow sm:size-[28rem] sm:blur-[150px]"
         aria-hidden
       />
 
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow="Stack"
-          title="Tecnologias que uso no dia a dia"
-          description="Do design da interface ao deploy: as ferramentas que sustentam meus projetos."
+          index="04"
+          eyebrow="Skills"
+          title={
+            <>
+              Tecnologias que uso <span className="accent-serif text-[1.08em]">de verdade</span>
+            </>
+          }
+          description="Organizadas pelo que mais uso no dia a dia — sem listas infladas."
         />
 
-        {/* Filtros */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-2 sm:mt-12">
-          {skillCategories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setCategory(cat.id)}
-              className={cn(
-                'relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300',
-                category === cat.id ? 'text-primary-foreground' : 'text-muted-foreground hover:text-foreground'
-              )}
+        {/* Stack principal */}
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:mt-16 sm:grid-cols-3 lg:grid-cols-5">
+          {coreSkills.map((skill, i) => (
+            <motion.div
+              key={skill.name}
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.55, delay: i * 0.06, ease }}
+              className={cn(i === coreSkills.length - 1 && 'col-span-2 sm:col-span-1')}
             >
-              {category === cat.id && (
-                <motion.span
-                  layoutId="skill-filter"
-                  transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                  className="absolute inset-0 -z-10 rounded-full bg-[linear-gradient(100deg,var(--primary),var(--accent))]"
-                />
-              )}
-              {cat.label}
-            </button>
+              <div className="surface group relative flex h-full items-center gap-4 overflow-hidden rounded-2xl p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[var(--shadow-card-hover)] sm:flex-col sm:items-start sm:p-5">
+                <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,color-mix(in_oklch,var(--primary)_16%,transparent),transparent_60%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <TechIcon name={skill.icon} className="relative text-3xl transition-transform duration-300 group-hover:scale-110 sm:text-4xl" />
+                <div className="relative">
+                  <p className="font-display text-base font-semibold">{skill.name}</p>
+                  <p className="font-mono text-[11px] text-muted-foreground">{skill.context}</p>
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
 
-        {/* Grid */}
-        <TooltipProvider>
-          <motion.div layout className="mt-8 grid grid-cols-3 gap-2.5 sm:mt-10 sm:grid-cols-4 sm:gap-3 md:grid-cols-5 lg:grid-cols-6">
-            <AnimatePresence mode="popLayout">
-              {filtered.map((skill, i) => (
-                <motion.div
-                  key={skill.name}
-                  layout
-                  initial={{ opacity: 0, scale: 0.85, y: 16 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.85 }}
-                  transition={{ duration: 0.4, delay: i * 0.025, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="group relative flex aspect-square cursor-default flex-col items-center justify-center gap-2.5 overflow-hidden rounded-2xl border border-white/7 bg-card/40 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/30 hover:bg-card/80 hover:shadow-[0_18px_45px_-22px_var(--primary)]">
-                        <span className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,color-mix(in_oklch,var(--primary)_22%,transparent),transparent_65%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                        <i
-                          className={cn(skill.icon, 'relative text-[2rem] transition-transform duration-300 group-hover:scale-115 sm:text-4xl')}
-                          aria-hidden
-                        />
-                        <span className="relative px-1 text-center text-[11px] leading-tight font-medium text-muted-foreground transition-colors group-hover:text-foreground">
+        {/* Áreas de atuação */}
+        <div className="mt-4 grid gap-4 sm:mt-5 md:grid-cols-2">
+          {focusAreas.map((area, i) => {
+            const Icon = areaIcon[area.id]
+            return (
+              <motion.div
+                key={area.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.7, delay: i * 0.1, ease }}
+              >
+                <SpotlightCard className="surface h-full rounded-3xl p-6 sm:p-8">
+                  <div className="relative z-2">
+                    <div className="flex items-center gap-3">
+                      <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary">
+                        <Icon className="size-5" />
+                      </span>
+                      <h3 className="font-display text-2xl font-bold tracking-tight">{area.title}</h3>
+                    </div>
+                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground text-pretty">{area.text}</p>
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {area.skills.map((skill) => (
+                        <li
+                          key={skill.name}
+                          className="inline-flex items-center gap-2 rounded-full border border-border bg-foreground/[0.03] px-3 py-1.5 text-xs font-medium"
+                        >
+                          <TechIcon name={skill.icon} className="text-sm" />
                           {skill.name}
-                        </span>
-                      </div>
-                    </TooltipTrigger>
-                    <TooltipContent>{skill.name}</TooltipContent>
-                  </Tooltip>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </TooltipProvider>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </SpotlightCard>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        {/* Inventário */}
+        <div className="mt-4 grid gap-4 sm:mt-5 md:grid-cols-3">
+          {skillGroups.map((group, i) => (
+            <motion.div
+              key={group.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, delay: i * 0.08, ease }}
+              className="surface rounded-3xl p-6"
+            >
+              <h3 className="font-mono text-[11px] tracking-[0.18em] text-muted-foreground uppercase">{group.title}</h3>
+              <ul className="mt-4 flex flex-col">
+                {group.skills.map((skill) => (
+                  <li
+                    key={skill.name}
+                    className="flex items-center gap-3 border-b border-border py-2.5 text-sm font-medium last:border-b-0"
+                  >
+                    {skill.icon ? (
+                      <TechIcon name={skill.icon} className="text-lg" />
+                    ) : (
+                      <span className="grid w-5 place-items-center" aria-hidden>
+                        <span className="size-1.5 rounded-full bg-primary" />
+                      </span>
+                    )}
+                    {skill.name}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Marquee infinito */}
-      <div className="mask-fade-x mt-12 flex overflow-hidden select-none sm:mt-16" aria-hidden>
-        <div className="flex w-max animate-marquee items-center gap-4 pr-4 hover:[animation-play-state:paused]">
+      <div className="mask-fade-x mt-16 flex overflow-hidden select-none sm:mt-20" aria-hidden>
+        <div className="flex w-max animate-marquee items-center gap-6 pr-6 hover:[animation-play-state:paused]">
           {[...marqueeItems, ...marqueeItems].map((item, i) => (
             <span
               key={`${item}-${i}`}
-              className="flex items-center gap-4 font-display text-lg font-medium whitespace-nowrap text-muted-foreground/45 sm:text-2xl"
+              className="flex items-center gap-6 font-display text-2xl font-medium whitespace-nowrap text-foreground/15 sm:text-4xl"
             >
               {item}
               <span className="size-1.5 rounded-full bg-primary/50" />

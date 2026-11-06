@@ -1,34 +1,72 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/src/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0b0c0e" />
+
+    <!-- Aplica o tema antes do primeiro paint: escolha salva > preferência do sistema -->
+    <script>
+      (function () {
+        var dark
+        try {
+          var saved = localStorage.getItem('theme')
+          dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
+        } catch (e) {
+          dark = true
+        }
+        if (dark) document.documentElement.classList.add('dark')
+      })()
+    </script>
+
+    <title>Victor Henrique Estrella Carracci | Desenvolvedor Front-End & Mobile</title>
     <meta
       name="description"
-      content="Portfólio de Victor Henrique Estrella Carracci — Desenvolvedor Front-End focado em React, Next.js, React Native e TypeScript."
+      content="Victor Henrique Estrella Carracci — Desenvolvedor Front-End & Mobile na Noweb. React, TypeScript, Next.js, React Native e Expo. Experiência profissional, projetos e contato."
     />
+    <meta name="author" content="Victor Henrique Estrella Carracci" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://portfolio-victor-carracci.vercel.app/" />
+
+    <link rel="icon" type="image/png" href="/src/assets/logo.png" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8f9fb" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0c0f" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Victor Estrella | Desenvolvedor Front-End" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:url" content="https://portfolio-victor-carracci.vercel.app/" />
+    <meta property="og:title" content="Victor Henrique Estrella Carracci | Desenvolvedor Front-End & Mobile" />
     <meta
       property="og:description"
-      content="Interfaces web e mobile responsivas, acessíveis e com performance real."
+      content="Desenvolvedor Front-End & Mobile com React, TypeScript, Next.js, React Native e Expo."
     />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Dados estruturados -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Victor Henrique Estrella Carracci",
+        "jobTitle": "Desenvolvedor Front-End & Mobile",
+        "url": "https://portfolio-victor-carracci.vercel.app/",
+        "worksFor": { "@type": "Organization", "name": "Noweb" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "FIAP" },
+        "address": { "@type": "PostalAddress", "addressLocality": "São Paulo", "addressRegion": "SP", "addressCountry": "BR" },
+        "knowsAbout": ["React", "TypeScript", "Next.js", "React Native", "Expo"],
+        "sameAs": ["https://github.com/Victor-Estrella", "https://www.linkedin.com/in/victorcarracci/"]
+      }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-
-    <title>Victor Estrella | Desenvolvedor Front-End</title>
   </head>
   <body>
+    <noscript>Este portfólio precisa de JavaScript habilitado.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

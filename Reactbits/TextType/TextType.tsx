@@ -2,7 +2,6 @@
 
 import type { ElementType } from "react";
 import { useEffect, useRef, useState, createElement } from "react";
-import { gsap } from "gsap";
 import "./TextType.css";
 
 interface TextTypeProps {
@@ -85,19 +84,6 @@ const TextType = ({
     observer.observe(containerRef.current);
     return () => observer.disconnect();
   }, [startOnVisible]);
-
-  useEffect(() => {
-    if (showCursor && cursorRef.current) {
-      gsap.set(cursorRef.current, { opacity: 1 });
-      gsap.to(cursorRef.current, {
-        opacity: 0,
-        duration: cursorBlinkDuration,
-        repeat: -1,
-        yoyo: true,
-        ease: "power2.inOut",
-      });
-    }
-  }, [showCursor, cursorBlinkDuration]);
 
   useEffect(() => {
     if (!isVisible) return;
@@ -192,6 +178,7 @@ const TextType = ({
     showCursor && (
       <span
         ref={cursorRef}
+        style={{ animationDuration: `${cursorBlinkDuration * 2}s` }}
         className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? "text-type__cursor--hidden" : ""}`}
       >
         {cursorCharacter}

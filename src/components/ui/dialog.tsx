@@ -17,7 +17,7 @@ function DialogOverlay({
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
       className={cn(
-        'fixed inset-0 z-50 bg-black/75 backdrop-blur-md',
+        'fixed inset-0 z-50 bg-foreground/25 backdrop-blur-md dark:bg-black/75',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0',
         className
@@ -41,7 +41,7 @@ function DialogContent({
         className={cn(
           'fixed top-1/2 left-1/2 z-50 grid w-[calc(100%-2rem)] max-w-4xl -translate-x-1/2 -translate-y-1/2',
           'max-h-[90dvh] overflow-y-auto overscroll-contain',
-          'rounded-3xl border border-white/10 bg-card/95 p-0 shadow-2xl shadow-black/60 backdrop-blur-xl',
+          'rounded-3xl border border-border bg-card p-0 shadow-[var(--shadow-float)]',
           'duration-300 data-[state=open]:animate-in data-[state=closed]:animate-out',
           'data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0',
           'data-[state=open]:zoom-in-95 data-[state=closed]:zoom-out-95',
@@ -54,7 +54,7 @@ function DialogContent({
         {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"
-            className="absolute top-4 right-4 z-10 grid size-9 place-items-center rounded-full border border-white/10 bg-black/40 text-muted-foreground backdrop-blur transition-all hover:rotate-90 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+            className="absolute top-4 right-4 z-10 grid size-9 place-items-center rounded-full border border-border bg-card/80 text-muted-foreground backdrop-blur transition-all hover:rotate-90 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
           >
             <XIcon className="size-4" />
             <span className="sr-only">Fechar</span>

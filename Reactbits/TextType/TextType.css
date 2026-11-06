@@ -7,6 +7,13 @@
   margin-left: 0.25rem;
   display: inline-block;
   opacity: 1;
+  /* piscar em CSS (antes via GSAP) — duração definida inline pelo componente */
+  animation: text-type-blink 1s ease-in-out infinite;
+}
+
+@keyframes text-type-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .text-type__cursor--hidden {

@@ -5,12 +5,14 @@
 ## 💻 Stacks & Ferramentas
 
 - React, TypeScript, Vite
-- Tailwind CSS, CSS Modules
-- React Bits (TextType, Particles)
-- Devicon, FontAwesome
+- Tailwind CSS v4 (tokens de tema light/dark)
+- Motion (animações), React Bits (TextType, Particles, SpotlightCard…)
+- Devicon (SVGs individuais), Lucide
 
 ## ✨ Funcionalidades
 
+- Light e Dark Mode (respeita o sistema na 1ª visita e salva a escolha)
+- Seção de experiência profissional e produtos
 - Layout responsivo (desktop, tablet, mobile)
 - Animações modernas e partículas
 - Cards de projetos com modal detalhado

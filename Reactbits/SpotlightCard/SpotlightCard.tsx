@@ -11,7 +11,7 @@ interface SpotlightCardProps {
 const SpotlightCard = ({
   children,
   className = '',
-  spotlightColor = 'rgba(56, 189, 248, 0.22)',
+  spotlightColor = 'color-mix(in oklch, var(--primary) 16%, transparent)',
   onClick,
 }: SpotlightCardProps) => {
   const divRef = useRef<HTMLDivElement>(null)

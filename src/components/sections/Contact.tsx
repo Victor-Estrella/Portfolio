@@ -1,43 +1,45 @@
-import { useState } from 'react'
+import { useState, type FormEvent } from 'react'
 import { motion } from 'motion/react'
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { ArrowUpRight, Check, Copy, Mail, MapPin } from 'lucide-react'
+import { ArrowUpRight, Check, Copy, Download, Mail, MapPin, Send } from 'lucide-react'
 
-import { Github, Linkedin } from '@/components/icons'
-
+import AuroraBackground from '@/components/AuroraBackground'
+import { Github, Linkedin, Whatsapp } from '@/components/icons'
 import SectionHeading from '@/components/sections/SectionHeading'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 import { profile } from '@/data/profile'
 import AnimatedContent from '@reactbits/AnimatedContent/AnimatedContent'
 import SpotlightCard from '@reactbits/SpotlightCard/SpotlightCard'
 
 const channels = [
   {
-    key: 'email',
-    label: 'Email',
-    value: profile.contact.email,
-    href: `mailto:${profile.contact.email}`,
-    icon: Mail,
-    accent: 'text-rose-400',
-  },
-  {
     key: 'linkedin',
     label: 'LinkedIn',
-    value: '/in/victorcarracci',
+    value: `/in/${profile.contact.linkedinHandle}`,
     href: profile.contact.linkedin,
     icon: Linkedin,
-    accent: 'text-sky-400',
+    external: true,
   },
   {
     key: 'github',
     label: 'GitHub',
-    value: '/Victor-Estrella',
+    value: `/${profile.contact.githubHandle}`,
     href: profile.contact.github,
     icon: Github,
-    accent: 'text-foreground',
+    external: true,
+  },
+  {
+    key: 'whatsapp',
+    label: 'WhatsApp',
+    value: profile.contact.whatsappLabel,
+    href: profile.contact.whatsapp,
+    icon: Whatsapp,
+    external: true,
   },
 ] as const
+
+const fieldClass =
+  'w-full rounded-xl border border-input bg-background/60 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-[border-color,box-shadow] outline-none focus:border-primary/60 focus:ring-[3px] focus:ring-ring/30'
 
 export default function Contact() {
   const [copied, setCopied] = useState(false)
@@ -52,34 +54,54 @@ export default function Contact() {
     }
   }
 
-  return (
-    <section id="contato" className="relative overflow-hidden px-4 py-20 sm:py-28">
-      <div
-        className="pointer-events-none absolute bottom-0 left-1/2 size-[18rem] -translate-x-1/2 rounded-full bg-accent/10 blur-[110px] sm:size-[36rem] sm:blur-[160px]"
-        aria-hidden
-      />
+  // Sem back-end: o formulário monta a mensagem e abre o cliente de e-mail do visitante.
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const data = new FormData(e.currentTarget)
+    const name = String(data.get('name') ?? '').trim()
+    const company = String(data.get('company') ?? '').trim()
+    const message = String(data.get('message') ?? '').trim()
 
-      <div className="mx-auto max-w-5xl">
+    const subject = `Contato pelo portfólio — ${name}${company ? ` (${company})` : ''}`
+    const body = `${message}\n\n—\n${name}${company ? `\n${company}` : ''}`
+
+    window.location.href = `mailto:${profile.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  }
+
+  return (
+    <section id="contato" className="relative overflow-hidden px-4 py-24 sm:py-32">
+      <AuroraBackground variant="bottom" />
+
+      <div className="relative mx-auto max-w-6xl">
         <SectionHeading
+          index="05"
           eyebrow="Contato"
-          title="Vamos construir algo juntos?"
-          description="Busco oportunidades como Desenvolvedor Front-End Júnior e estou aberto a freelas e parcerias técnicas focadas em interface, performance e boas práticas."
+          align="center"
+          title={
+            <>
+              Vamos conversar sobre a <span className="accent-serif text-[1.08em]">próxima oportunidade?</span>
+            </>
+          }
+          description="Busco vagas de Desenvolvedor Front-End ou Mobile Júnior. Se você é recrutador(a) ou faz parte de um time de produto, fale comigo pelo canal que preferir."
         />
 
         <AnimatedContent distance={50} duration={0.8} className="mt-12 sm:mt-14">
           <SpotlightCard
-            className="rounded-3xl border border-white/7 bg-card/50 p-5 backdrop-blur-sm sm:p-7 lg:p-10"
-            spotlightColor="rgba(167, 139, 250, 0.18)"
+            className="surface rounded-3xl p-5 sm:p-8 lg:p-10"
+            spotlightColor="color-mix(in oklch, var(--accent) 14%, transparent)"
           >
-            <div className="relative z-2 grid gap-7 md:grid-cols-[1.1fr_1fr] md:gap-8">
-              {/* CTA principal */}
-              <div className="flex flex-col justify-between gap-6">
+            <div className="relative z-2 grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12">
+              {/* Canais diretos */}
+              <div className="flex flex-col gap-6">
                 <div>
-                  <p className="font-mono text-[11px] tracking-[0.18em] text-primary uppercase">
-                    Resposta em até 24h
-                  </p>
+                  {profile.available && (
+                    <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] text-success uppercase">
+                      <span className="size-1.5 rounded-full bg-success" />
+                      {profile.availability}
+                    </span>
+                  )}
                   <h3 className="mt-3 font-display text-2xl leading-tight font-bold text-balance sm:text-3xl">
-                    Me chama no WhatsApp ou manda um e-mail
+                    O caminho mais rápido é o e-mail
                   </h3>
                   <p className="mt-3 flex items-center gap-2 text-sm text-muted-foreground">
                     <MapPin className="size-4 text-primary" />
@@ -87,48 +109,101 @@ export default function Contact() {
                   </p>
                 </div>
 
-                <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap">
-                  <Button
-                    size="lg"
-                    variant="gradient"
-                    className="w-full sm:w-auto"
-                    onClick={() => window.open(profile.contact.whatsapp, '_blank', 'noopener,noreferrer')}
+                {/* E-mail em destaque */}
+                <div className="rounded-2xl border border-border bg-foreground/[0.03] p-4">
+                  <p className="text-xs text-muted-foreground">E-mail</p>
+                  <a
+                    href={`mailto:${profile.contact.email}`}
+                    className="mt-1 block truncate font-display text-lg font-semibold transition-colors hover:text-primary sm:text-xl"
                   >
-                    <FontAwesomeIcon icon={faWhatsapp} className="size-4" />
-                    WhatsApp
-                  </Button>
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto" onClick={copyEmail}>
-                    {copied ? <Check className="size-4 text-emerald-400" /> : <Copy className="size-4" />}
-                    {copied ? 'Email copiado!' : 'Copiar email'}
-                  </Button>
+                    {profile.contact.email}
+                  </a>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Button size="sm" variant="outline" onClick={copyEmail} aria-live="polite">
+                      {copied ? <Check className="size-3.5 text-success" /> : <Copy className="size-3.5" />}
+                      {copied ? 'E-mail copiado!' : 'Copiar e-mail'}
+                    </Button>
+                    <a
+                      href={profile.resumeUrl}
+                      download={profile.resumeFileName}
+                      className={buttonVariants({ size: 'sm', variant: 'ghost' })}
+                    >
+                      <Download className="size-3.5" />
+                      Currículo (PDF)
+                    </a>
+                  </div>
                 </div>
+
+                <ul className="flex flex-col gap-2.5">
+                  {channels.map((channel, i) => (
+                    <motion.li
+                      key={channel.key}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.08 }}
+                    >
+                      <a
+                        href={channel.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center gap-3.5 rounded-2xl border border-border bg-card/40 px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-card"
+                      >
+                        <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-foreground/[0.03]">
+                          <channel.icon className="size-4.5" />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-xs text-muted-foreground">{channel.label}</span>
+                          <span className="block truncate text-sm font-medium">{channel.value}</span>
+                        </span>
+                        <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
               </div>
 
-              {/* Canais */}
-              <div className="flex flex-col gap-2.5">
-                {channels.map((channel, i) => (
-                  <motion.a
-                    key={channel.key}
-                    href={channel.href}
-                    target={channel.key === 'email' ? undefined : '_blank'}
-                    rel="noopener noreferrer"
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.08 }}
-                    className="group flex items-center gap-3.5 rounded-2xl border border-white/7 bg-white/2 px-4 py-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-white/6"
-                  >
-                    <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-white/7 bg-white/3">
-                      <channel.icon className={`size-4.5 ${channel.accent}`} />
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-xs text-muted-foreground">{channel.label}</span>
-                      <span className="block truncate text-sm font-medium">{channel.value}</span>
-                    </span>
-                    <ArrowUpRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
-                  </motion.a>
-                ))}
-              </div>
+              {/* Formulário */}
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4 lg:border-l lg:border-border lg:pl-12">
+                <div>
+                  <h3 className="font-display text-xl font-bold">Envie uma mensagem</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Ao enviar, seu aplicativo de e-mail abre com a mensagem pronta.
+                  </p>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <label className="flex flex-col gap-1.5 text-xs font-medium text-muted-foreground">
+                    Nome
+                    <input name="name" required autoComplete="name" placeholder="Seu nome" className={fieldClass} />
+                  </label>
+                  <label className="flex flex-col gap-1.5 text-xs font-medium text-muted-foreground">
+                    Empresa <span className="sr-only">(opcional)</span>
+                    <input name="company" autoComplete="organization" placeholder="Opcional" className={fieldClass} />
+                  </label>
+                </div>
+
+                <label className="flex flex-col gap-1.5 text-xs font-medium text-muted-foreground">
+                  Mensagem
+                  <textarea
+                    name="message"
+                    required
+                    rows={6}
+                    placeholder="Conte um pouco sobre a vaga ou o projeto…"
+                    className={cn(fieldClass, 'resize-none')}
+                  />
+                </label>
+
+                <Button type="submit" size="lg" variant="gradient" className="mt-1 w-full sm:w-auto sm:self-start">
+                  <Send className="size-4" />
+                  Enviar mensagem
+                </Button>
+
+                <p className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <Mail className="size-3.5" />
+                  Destino: {profile.contact.email}
+                </p>
+              </form>
             </div>
           </SpotlightCard>
         </AnimatedContent>

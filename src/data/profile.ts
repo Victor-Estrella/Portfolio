@@ -1,11 +1,17 @@
 export const profile = {
   name: 'Victor Henrique Estrella Carracci',
-  shortName: 'Victor Estrella',
+  shortName: 'Victor Estrella Carracci',
   initials: 'VE',
-  role: 'Desenvolvedor Front-End',
-  headline: 'Desenvolvedor Front-End | React · React Native · Next.js · TypeScript',
+  role: 'Desenvolvedor Front-End & Mobile',
   location: 'São Paulo — SP, Brasil',
-  objective: 'Estágio / Desenvolvedor Júnior em Desenvolvimento de Software',
+  available: true,
+  availability: 'Disponível para novas oportunidades',
+
+  summary:
+    'Desenvolvo interfaces web e aplicativos mobile com React, Next.js e React Native — com componentes reutilizáveis, código tipado e integração com APIs REST.',
+
+  /** Stack principal exibida no Hero e em destaque nas Skills */
+  coreStack: ['React', 'TypeScript', 'Next.js', 'React Native', 'Expo'],
 
   /** PDF servido de `public/` — o link usa `download`, então o navegador baixa direto. */
   resumeUrl: '/curriculo-victor-carracci.pdf',
@@ -13,22 +19,34 @@ export const profile = {
 
   /** Frases digitadas no Hero (componente TextType) */
   typewriter: [
-    'Desenvolvedor Front-End | React · React Native · Next.js',
-    'Interfaces responsivas e integração com APIs REST',
+    'interfaces responsivas e componentizadas',
+    'integração com APIs REST',
+    'apps mobile com React Native + Expo',
     'Clean Code, SOLID e foco na experiência do usuário',
   ] as string[],
 
   bio: [
-    'Desenvolvedor Front-End com experiência profissional no desenvolvimento de aplicações web e mobile utilizando React, React Native, Next.js e TypeScript.',
-    'Atuo na criação de interfaces responsivas e reutilizáveis, integração com APIs REST, desenvolvimento de novas funcionalidades e manutenção de sistemas — incluindo correção de bugs e otimização de performance.',
-    'Tenho conhecimentos em JavaScript, Tailwind CSS, Git, Docker e boas práticas como Clean Code e SOLID. Busco contribuir com soluções escaláveis, de qualidade e com foco na experiência do usuário.',
+    'Sou desenvolvedor Front-End e Mobile na Noweb, onde participo do desenvolvimento e da evolução de produtos web e mobile.',
+    'No dia a dia, construo interfaces responsivas e componentizadas, integro o front-end com APIs REST, implemento novas funcionalidades e cuido da manutenção das aplicações — da correção de bugs à otimização de performance.',
+    'Sou formado em Análise e Desenvolvimento de Sistemas pela FIAP e curso Engenharia de Software. Sigo estudando de forma contínua e uso projetos próprios para experimentar novas tecnologias e evoluir tecnicamente.',
   ],
 
+  education: [
+    { course: 'Engenharia de Software', degree: 'Bacharelado', school: 'FIAP', status: 'Em andamento' },
+    { course: 'Análise e Desenvolvimento de Sistemas', degree: 'Tecnólogo', school: 'FIAP', status: 'Concluído · Dez/2025' },
+  ],
+
+  languages: [
+    { name: 'Inglês', level: 'Intermediário' },
+    { name: 'Espanhol', level: 'Intermediário' },
+  ],
 
   contact: {
     email: 'victorhcarracci@gmail.com',
     github: 'https://github.com/Victor-Estrella',
+    githubHandle: 'Victor-Estrella',
     linkedin: 'https://www.linkedin.com/in/victorcarracci/',
+    linkedinHandle: 'victorcarracci',
     whatsapp: 'https://wa.me/5511971478515',
     whatsappLabel: '+55 (11) 97147-8515',
   },
@@ -37,14 +55,12 @@ export const profile = {
 export const navLinks = [
   { id: 'home', label: 'Início' },
   { id: 'sobre', label: 'Sobre' },
-  { id: 'skills', label: 'Skills' },
+  { id: 'experiencia', label: 'Experiência' },
   { id: 'projetos', label: 'Projetos' },
+  { id: 'skills', label: 'Skills' },
   { id: 'contato', label: 'Contato' },
 ] as const
 
-export const stats = [
-  { value: 6, suffix: '', label: 'Projetos entregues' },
-  { value: 3, suffix: '', label: 'Apps mobile' },
-  { value: 16, suffix: '+', label: 'Tecnologias' },
-  { value: 2, suffix: '+', label: 'Anos codando' },
-] as const
+export function scrollToSection(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}

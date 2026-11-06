@@ -13,8 +13,8 @@ const buttonVariants = cva(
         gradient:
           'text-primary-foreground bg-[linear-gradient(100deg,var(--primary),var(--accent))] bg-[length:200%_auto] hover:bg-right hover:shadow-[0_10px_40px_-12px_var(--primary)]',
         outline:
-          'border border-border bg-white/2 text-foreground hover:bg-white/6 hover:border-primary/50',
-        ghost: 'text-muted-foreground hover:bg-white/6 hover:text-foreground',
+          'border border-border bg-card/60 text-foreground shadow-[var(--shadow-card)] hover:bg-card hover:border-primary/45',
+        ghost: 'text-muted-foreground hover:bg-foreground/[0.06] hover:text-foreground',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/70',
         link: 'text-primary underline-offset-4 hover:underline',
       },
