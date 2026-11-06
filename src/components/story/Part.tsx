@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 
 const ease = cubicBezier(0.65, 0, 0.35, 1)
 
-type Key = 'x' | 'y' | 'z' | 'rotate' | 'rotateX' | 'rotateY' | 'scale' | 'opacity'
+type Key = 'x' | 'y' | 'z' | 'rotate' | 'rotateX' | 'rotateY' | 'rotateZ' | 'scale' | 'opacity'
 export type Track = Partial<Record<Key, number[]>>
 
 function useTrack(p: MotionValue<number>, at: number[], values: number[] | undefined, fallback: number) {
@@ -35,13 +35,14 @@ export default function Part({ p, at, track, className, style, children }: PartP
   const rotate = useTrack(p, at, track.rotate, 0)
   const rotateX = useTrack(p, at, track.rotateX, 0)
   const rotateY = useTrack(p, at, track.rotateY, 0)
+  const rotateZ = useTrack(p, at, track.rotateZ, 0)
   const scale = useTrack(p, at, track.scale, 1)
   const opacity = useTrack(p, at, track.opacity, 1)
 
   return (
     <motion.div
       className={cn('absolute [transform-style:preserve-3d] will-change-transform', className)}
-      style={{ x, y, z, rotate, rotateX, rotateY, scale, opacity, ...style }}
+      style={{ x, y, z, rotate, rotateX, rotateY, rotateZ, scale, opacity, ...style }}
     >
       {children}
     </motion.div>

@@ -1,6 +1,7 @@
-import { motion } from 'motion/react'
 import { GraduationCap, Languages, Layers, MapPin, Plug, Rocket, Smartphone } from 'lucide-react'
 
+import ScrollTilt from '@/components/motion/ScrollTilt'
+import ScrollWords from '@/components/motion/ScrollWords'
 import SectionHeading from '@/components/sections/SectionHeading'
 import { Badge } from '@/components/ui/badge'
 import { profile } from '@/data/profile'
@@ -59,7 +60,14 @@ export default function About() {
           description="Desenvolvedor Front-End & Mobile com experiência profissional em produtos reais e formação em tecnologia pela FIAP."
         />
 
-        <div className="mt-12 grid gap-4 sm:mt-16 sm:gap-5 lg:grid-cols-[1.25fr_1fr]">
+        {/* frase de abertura: acende palavra por palavra com a rolagem */}
+        <ScrollWords
+          text={profile.bio[0]}
+          highlight={['Noweb', 'evolução']}
+          className="mt-14 max-w-4xl font-display text-[1.6rem] leading-[1.2] font-semibold tracking-tight sm:mt-20 sm:text-4xl lg:text-[2.75rem]"
+        />
+
+        <div className="mt-14 grid gap-4 sm:mt-20 sm:gap-5 lg:grid-cols-[1.25fr_1fr]">
           {/* Bio */}
           <AnimatedContent distance={50} duration={0.8}>
             <SpotlightCard className="surface h-full rounded-3xl p-6 sm:p-8 lg:p-10">
@@ -72,12 +80,12 @@ export default function About() {
                   </Badge>
                 </div>
 
-                {profile.bio.map((paragraph, i) => (
+                {profile.bio.slice(1).map((paragraph, i) => (
                   <p
                     key={i}
                     className={
                       i === 0
-                        ? 'font-display text-lg leading-snug font-medium text-foreground text-pretty sm:text-xl'
+                        ? 'text-base leading-relaxed text-foreground/90 text-pretty sm:text-lg'
                         : 'text-sm leading-relaxed text-muted-foreground text-pretty sm:text-[0.98rem]'
                     }
                   >
@@ -153,20 +161,15 @@ export default function About() {
         {/* Como trabalho */}
         <div className="mt-4 grid gap-3 sm:mt-5 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((pillar, i) => (
-            <motion.div
-              key={pillar.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="surface group rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[var(--shadow-card-hover)]"
-            >
-              <span className="mb-4 grid size-10 place-items-center rounded-xl bg-primary/10 text-primary transition-transform duration-300 group-hover:scale-110">
+            <ScrollTilt key={pillar.title} lag={i * 0.06} className="h-full">
+            <div className="surface group h-full rounded-2xl p-5 ink-hover">
+              <span className="mb-4 grid size-10 place-items-center rounded-xl bg-primary/10 text-primary">
                 <pillar.icon className="size-5" />
               </span>
               <h3 className="font-display text-[0.95rem] font-semibold">{pillar.title}</h3>
               <p className="mt-1.5 text-[0.82rem] leading-relaxed text-muted-foreground">{pillar.text}</p>
-            </motion.div>
+            </div>
+            </ScrollTilt>
           ))}
         </div>
       </div>

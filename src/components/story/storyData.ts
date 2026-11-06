@@ -1,38 +1,62 @@
-/** Etapas da história "Do código à tela" — textos baseados no currículo. */
+/**
+ * "Anatomia de uma interface": a tela do Hero se separa em camadas, uma por etapa.
+ * Textos baseados no currículo (sem atribuir nada que não foi feito).
+ */
 
-export const STORY_STEPS = [
+export const LAYERS = [
   {
-    id: 'web',
-    tab: 'Web',
-    title: 'Interfaces web componentizadas.',
-    text: 'Sites e aplicações com React, Next.js e TypeScript — responsivos, com componentes reutilizáveis e tipagem do começo ao fim.',
-    stack: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
-    cta: { label: 'Ver projetos', target: 'projetos' },
-    bg: '#2563eb',
-    /** progresso em que a etapa fica em foco (clique na aba) */
-    focus: 0.3,
+    id: 'layout',
+    label: 'Layout',
+    tag: '<Grid />',
+    text: 'Grid, espaçamento e responsividade: a estrutura que segura tudo, do desktop ao celular.',
   },
   {
-    id: 'mobile',
-    tab: 'Mobile',
-    title: 'Apps na mão de quem usa.',
-    text: 'Aplicativos com React Native e Expo, usando a mesma base de componentes e tipagem da web.',
-    stack: ['React Native', 'Expo', 'TypeScript'],
-    cta: { label: 'Ver experiência', target: 'experiencia' },
-    bg: '#0b0d12',
-    focus: 0.56,
+    id: 'components',
+    label: 'Componentes',
+    tag: '<Card />',
+    text: 'Peças reutilizáveis e tipadas em React + TypeScript, prontas para crescer sem retrabalho.',
   },
   {
-    id: 'api',
-    tab: 'Integrações',
-    title: 'Front conectado ao back.',
-    text: 'Consumo de APIs REST com estados de carregamento e erro tratados, em diálogo direto com o time de back-end.',
-    stack: ['APIs REST', 'Git', 'Clean Code'],
-    cta: { label: 'Ver skills', target: 'skills' },
-    bg: '#5b21b6',
-    focus: 0.83,
+    id: 'content',
+    label: 'Conteúdo',
+    tag: '<Hero />',
+    text: 'Hierarquia visual e tipografia para a informação certa aparecer primeiro.',
+  },
+  {
+    id: 'interaction',
+    label: 'Interação',
+    tag: 'onClick()',
+    text: 'Estados de hover, foco e carregamento — feedback claro em cada ação.',
+  },
+  {
+    id: 'data',
+    label: 'Dados',
+    tag: 'useQuery()',
+    text: 'Integração com APIs REST, com estados de carregamento e erro tratados.',
   },
 ] as const
 
-/** Limites entre etapas (para a aba ativa) */
-export const stepAt = (p: number) => (p < 0.44 ? 0 : p < 0.68 ? 1 : 2)
+export const FINALE = {
+  label: 'Web + Mobile',
+  text: 'A mesma base em React e React Native: site e app com a mesma qualidade.',
+}
+
+/** Momentos-chave do progresso (0 → 1) */
+export const K = {
+  start: 0.04, // a tela começa a girar
+  exploded: 0.15, // camadas separadas
+  firstFocus: 0.23,
+  step: 0.09, // intervalo entre camadas
+  collapse: 0.74, // camadas se juntam de novo
+  finale: 0.84, // web + mobile lado a lado
+}
+
+/** progresso em que a camada `i` está em foco */
+export const focusAt = (i: number) => K.firstFocus + i * K.step
+
+/** etapa ativa: -1 (Hero), 0..4 (camadas), 5 (final) */
+export const stepAt = (p: number) => {
+  if (p < K.exploded) return -1
+  if (p >= K.collapse) return LAYERS.length
+  return Math.max(0, Math.min(LAYERS.length - 1, Math.round((p - K.firstFocus) / K.step)))
+}

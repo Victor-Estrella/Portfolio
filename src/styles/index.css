@@ -144,17 +144,12 @@
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 12px);
 
-  --animate-marquee: marquee 45s linear infinite;
   --animate-shine: shine 5s linear infinite;
   --animate-float: float 7s ease-in-out infinite;
   --animate-ping-slow: ping-slow 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
   --animate-aurora-a: aurora-a 22s ease-in-out infinite alternate;
   --animate-aurora-b: aurora-b 28s ease-in-out infinite alternate;
 
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
   @keyframes shine {
     0% { background-position: 200% center; }
     100% { background-position: -200% center; }
@@ -273,6 +268,17 @@
   color: transparent;
 }
 
+/* Hover dos cards: só a borda acende e a sombra aprofunda — sem deslocamento */
+@utility ink-hover {
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+  &:hover {
+    border-color: color-mix(in oklch, var(--primary) 35%, transparent);
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+
 /* Textura de grão (papel) — SVG inline, sem requisição extra */
 @utility grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -282,11 +288,6 @@
 
 @utility glow {
   opacity: var(--glow);
-}
-
-@utility mask-fade-x {
-  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
 }
 
 

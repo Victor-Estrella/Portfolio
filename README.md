@@ -7,7 +7,7 @@
 - React, TypeScript, Vite
 - Tailwind CSS v4 (tokens de tema light/dark)
 - Motion (animações), React Bits (TextType, SpotlightCard…)
-- História "Do código à tela" guiada pelo scroll (Motion + transformações 3D em CSS)
+- História "Anatomia de uma interface" guiada pelo scroll (Motion + 3D em CSS) e entradas inclinadas no restante do site
 - Devicon (SVGs individuais), Lucide
 
 ## ✨ Funcionalidades

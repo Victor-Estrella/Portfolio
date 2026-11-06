@@ -1,86 +1,75 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
-import { AnimatePresence, motion, useMotionValue, useMotionValueEvent, useScroll, useTransform } from 'motion/react'
-import { ArrowDown, ArrowRight } from 'lucide-react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import {
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useTransform,
+  type MotionValue,
+} from 'motion/react'
+import { ArrowDown } from 'lucide-react'
 
 import AuroraBackground from '@/components/AuroraBackground'
 import HeroContent from '@/components/hero/HeroContent'
 import { cn } from '@/lib/utils'
-import { scrollToSection } from '@/data/profile'
+import { useSmoothScroll } from '@/hooks/useSmoothScroll'
 import Part from './Part'
-import {
-  ApiTerminal,
-  BrowserBar,
-  CodeLine,
-  EditorChrome,
-  Ink,
-  PhoneCard,
-  PhoneHeader,
-  PhoneRow,
-  PhoneTabBar,
-  WebCard,
-  WebHeadline,
-  WebImage,
-} from './mocks'
-import { CODE_LINES, BLUE, INK, VIOLET } from './palette'
-import { STORY_STEPS, stepAt } from './storyData'
+import { Ink, PhoneCard, PhoneHeader, PhoneRow, PhoneTabBar } from './mocks'
+import { LayerComponents, LayerContent, LayerData, LayerInteraction, LayerLayout, LayerTag } from './layers'
+import { INK, VIOLET } from './palette'
+import { FINALE, K, LAYERS, focusAt, stepAt } from './storyData'
 
 /**
- * Coreografia "Do código à tela".
+ * "Anatomia de uma interface".
  *
- * O trilho tem várias alturas de tela; o palco fica preso (sticky) e um único
- * progresso `p` (0 → 1) do scroll comanda tudo: o Hero sai, o código explode em
- * profundidade e se remonta em uma interface web, depois num app e por fim numa
- * integração com API. As peças vivem num palco virtual de 1000×625 px, escalado
- * para caber na tela.
+ * O trilho tem várias alturas de tela e o palco fica preso (sticky). O progresso
+ * do scroll passa por uma mola (suaviza a roda do mouse) e comanda tudo: o Hero
+ * sai, a tela gira para uma vista isométrica e se separa em camadas — layout,
+ * componentes, conteúdo, interação e dados —, cada uma em foco na sua vez. No fim
+ * as camadas se juntam e a mesma interface aparece no app mobile.
  */
-
-/** Momentos-chave do progresso */
-const K = {
-  start: 0.05, // o código começa a se soltar
-  explode: 0.16, // linhas espalhadas em profundidade
-  web: 0.27, // interface web montada
-  webEnd: 0.42,
-  mobile: 0.54, // app montado na frente
-  mobileEnd: 0.66,
-  api: 0.78, // integração conectada
-}
 
 const STAGE_W = 1000
 const STAGE_H = 625
+const LAYER_GAP = 124
+const PLANE_X = 220
+const PLANE_Y = 132
+const PLANE_W = 560
+const PLANE_H = 360
+const LAYER_VIEWS = [LayerLayout, LayerComponents, LayerContent, LayerInteraction, LayerData]
+
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
 const smooth = (t: number) => t * t * (3 - 2 * t)
 
-/** Posição/escala do palco: à direita no Hero, embaixo à esquerda na história */
+/** Palco à direita no Hero; à direita e maior durante a história */
 function frame(p: number, w: number, h: number) {
   const cw = Math.min(w - 32, 1152)
   const left = (w - cw) / 2
 
-  const s0 = (cw * 0.5) / STAGE_W
-  const x0 = left + cw * 0.53
-  const y0 = h * 0.52 - (STAGE_H * s0) / 2 + 10
+  // a tela (560×360, em x=220 y=132 do palco) ocupa ~46% da largura no Hero
+  const s0 = Math.min((cw * 0.44) / PLANE_W, (h * 0.5) / PLANE_H)
+  const x0 = left + cw * 0.54 - PLANE_X * s0
+  const y0 = h * 0.52 - (PLANE_Y + PLANE_H / 2) * s0
 
-  const s1 = Math.min((cw * 0.74) / STAGE_W, (h * 0.66) / STAGE_H)
-  const x1 = left - 8
-  const y1 = h - STAGE_H * s1 - h * 0.05
+  const s1 = Math.min((cw * 0.62) / STAGE_W, (h * 0.8) / STAGE_H)
+  const x1 = left + cw * 0.69 - (STAGE_W / 2) * s1
+  const y1 = h * 0.58 - (PLANE_Y + PLANE_H / 2) * s1
 
-  const t = smooth(clamp01((p - K.start) / (K.explode + 0.04 - K.start)))
+  const t = smooth(clamp01((p - K.start) / (K.exploded - K.start)))
   return { x: x0 + (x1 - x0) * t, y: y0 + (y1 - y0) * t, s: s0 + (s1 - s0) * t }
 }
 
-/* pseudo-aleatório determinístico */
-const rand = (i: number) => {
-  const x = Math.sin(i * 127.1 + 311.7) * 43758.5453
-  return x - Math.floor(x)
+/** Rotação da tela: inclinada no Hero → isométrica → de frente no final */
+const ISO_AT = [0, K.start, K.exploded, K.collapse, K.finale]
+const ISO = {
+  rotateX: [7, 7, 56, 56, 0],
+  rotateY: [-14, -14, 0, 0, 0],
+  rotateZ: [0, 0, -36, -36, 0],
 }
 
 export default function HeroStory() {
   const trackRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: trackRef, offset: ['start start', 'end end'] })
-  // Repassa o progresso para um MotionValue comum: assim o Motion não tenta acelerar
-  // opacity/cor com a ScrollTimeline nativa (que ignoraria o `offset` do trilho).
-  const p = useMotionValue(0)
-  useMotionValueEvent(scrollYProgress, 'change', (v) => p.set(v))
-  useEffect(() => p.set(scrollYProgress.get()), [p, scrollYProgress])
+  // progresso do trilho suavizado por uma mola (a roda do mouse não "pula")
+  const p = useSmoothScroll(trackRef, ['start start', 'end end'], { stiffness: 110, damping: 26, mass: 0.6, restDelta: 0.0001 })
 
   // tamanho da tela como motion values: o palco reposiciona no resize sem re-render
   const vw = useMotionValue(typeof window === 'undefined' ? 1440 : window.innerWidth)
@@ -98,23 +87,15 @@ export default function HeroStory() {
   const stageY = useTransform([p, vw, vh], ([a, b, c]: number[]) => frame(a, b, c).y)
   const stageS = useTransform([p, vw, vh], ([a, b, c]: number[]) => frame(a, b, c).s)
 
-  // Hero sai; história entra
-  const heroOpacity = useTransform(p, [0.015, 0.09], [1, 0])
-  const heroY = useTransform(p, [0, 0.11], [0, -90])
-  const storyOpacity = useTransform(p, [0.13, 0.2], [0, 1])
-  const storyY = useTransform(p, [0.13, 0.21], [40, 0])
-  const bg = useTransform(
-    p,
-    [0.06, 0.17, K.webEnd, K.webEnd + 0.07, K.mobileEnd, K.mobileEnd + 0.07],
-    ['rgba(37,99,235,0)', 'rgba(37,99,235,1)', 'rgba(37,99,235,1)', 'rgba(11,13,18,1)', 'rgba(11,13,18,1)', 'rgba(91,33,182,1)']
-  )
+  const heroOpacity = useTransform(p, [0.01, 0.07], [1, 0])
+  const heroY = useTransform(p, [0, 0.1], [0, -80])
+  const storyOpacity = useTransform(p, [0.1, 0.16], [0, 1])
+  const storyX = useTransform(p, [0.1, 0.17], [-30, 0])
+  const rail = useTransform(p, [K.exploded, K.finale], [0, 1])
 
-  const [step, setStep] = useState(0)
-  const [heroLive, setHeroLive] = useState(true)
-  useMotionValueEvent(p, 'change', (v) => {
-    setStep(stepAt(v))
-    setHeroLive(v < 0.07)
-  })
+  const [step, setStep] = useState(-1)
+  useMotionValueEvent(p, 'change', (v) => setStep(stepAt(v)))
+  const heroLive = step === -1
 
   const goToProgress = (target: number) => {
     const track = trackRef.current
@@ -123,14 +104,12 @@ export default function HeroStory() {
     window.scrollTo({ top: top + target * (track.offsetHeight - window.innerHeight), behavior: 'smooth' })
   }
 
-  const current = STORY_STEPS[step]
+  const steps = [...LAYERS.map((l) => ({ label: l.label, text: l.text })), FINALE]
 
   return (
-    <section id="home" ref={trackRef} aria-label="Apresentação" className="relative h-[480vh]">
+    <section id="home" ref={trackRef} aria-label="Apresentação" className="relative h-[520vh]">
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Fundos */}
         <AuroraBackground variant="hero" />
-        <motion.div className="absolute inset-0" style={{ backgroundColor: bg }} aria-hidden />
 
         {/* Hero (primeiro quadro) */}
         <motion.div
@@ -146,79 +125,78 @@ export default function HeroStory() {
         {/* Palco 3D */}
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute top-0 left-0 z-0 origin-top-left"
+          className="pointer-events-none absolute top-0 left-0 origin-top-left"
           style={{ x: stageX, y: stageY, scale: stageS, width: STAGE_W, height: STAGE_H }}
         >
-          <div className="relative size-full [transform-style:preserve-3d]" style={{ perspective: 1800 }}>
-            <CodeStage p={p} />
-            <WebStage p={p} />
-            <MobileStage p={p} />
-            <ApiStage p={p} />
+          <div className="relative size-full [transform-style:preserve-3d]" style={{ perspective: 2200 }}>
+            <Interface p={p} />
+            <PhoneFinale p={p} />
           </div>
         </motion.div>
 
-        {/* Texto da história */}
+        {/* Texto: título + etapas com trilha de progresso */}
         <motion.div
-          style={{ opacity: storyOpacity, y: storyY }}
-          className={cn('absolute inset-0 z-20 px-4 text-white', heroLive && 'pointer-events-none')}
+          style={{ opacity: storyOpacity, x: storyX }}
+          className={cn('absolute inset-0 z-20 px-4', heroLive && 'pointer-events-none')}
+          aria-hidden={heroLive}
         >
           <div className="relative mx-auto h-full max-w-6xl">
-            <h2 className="absolute top-[14vh] left-0 font-display text-[clamp(2.6rem,4.6vw,4.2rem)] leading-[1] font-bold tracking-[-0.035em]">
-              Do código
-              <br />
-              <span className="font-serif text-[1.1em] font-normal tracking-normal text-sky-200 italic">à tela.</span>
-            </h2>
+            <div className="absolute top-[15vh] left-0 w-[32%] min-w-[19rem]">
+              <p className="font-mono text-[11px] tracking-[0.2em] text-primary uppercase">Como eu construo</p>
+              <h2 className="mt-3 font-display text-[clamp(2.2rem,3.6vw,3.3rem)] leading-[1.02] font-bold tracking-[-0.03em]">
+                Anatomia de
+                <br />
+                <span className="accent-serif text-[1.1em]">uma interface.</span>
+              </h2>
 
-            <div className="absolute top-[14vh] right-0 w-[36%] min-w-[20rem]">
-              <div role="tablist" aria-label="Etapas" className="flex gap-6">
-                {STORY_STEPS.map((s, i) => (
-                  <button
-                    key={s.id}
-                    role="tab"
-                    aria-selected={step === i}
-                    onClick={() => goToProgress(s.focus)}
-                    className={cn(
-                      'relative pb-2 font-display text-lg font-bold transition-colors',
-                      step === i ? 'text-white' : 'text-white/45 hover:text-white/75'
-                    )}
-                  >
-                    {s.tab}
-                    {step === i && (
-                      <motion.span layoutId="story-tab" className="absolute inset-x-0 bottom-0 h-[3px] rounded-full bg-white" />
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={current.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -12 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className="mt-7"
-                  role="tabpanel"
-                >
-                  <h3 className="font-display text-[2rem] leading-[1.05] font-bold tracking-tight text-balance">{current.title}</h3>
-                  <p className="mt-4 text-[0.98rem] leading-relaxed text-white/80">{current.text}</p>
-                  <ul className="mt-5 flex flex-wrap gap-2">
-                    {current.stack.map((s) => (
-                      <li key={s} className="rounded-full border border-white/25 px-3 py-1 text-xs font-medium text-white/90">
-                        {s}
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={() => scrollToSection(current.cta.target)}
-                    className="mt-7 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-semibold transition-transform hover:-translate-y-0.5"
-                    style={{ color: INK }}
-                  >
-                    {current.cta.label}
-                    <ArrowRight className="size-4" />
-                  </button>
-                </motion.div>
-              </AnimatePresence>
+              <ol className="relative mt-8 flex flex-col gap-1 pl-6">
+                <span className="absolute top-2 bottom-2 left-[5px] w-[2px] rounded-full bg-border" aria-hidden />
+                <motion.span
+                  className="absolute top-2 bottom-2 left-[5px] w-[2px] origin-top rounded-full bg-[linear-gradient(var(--primary),var(--accent))]"
+                  style={{ scaleY: rail }}
+                  aria-hidden
+                />
+                {steps.map((s, i) => {
+                  const active = step === i
+                  const done = step > i
+                  return (
+                    <li key={s.label} className="relative">
+                      <span
+                        className={cn(
+                          'absolute top-[0.85rem] -left-6 size-3 rounded-full border-2 transition-colors duration-300',
+                          active ? 'border-primary bg-primary' : done ? 'border-primary bg-background' : 'border-border bg-background'
+                        )}
+                        aria-hidden
+                      />
+                      <button
+                        onClick={() => goToProgress(i < LAYERS.length ? focusAt(i) : K.finale + 0.06)}
+                        className={cn(
+                          'flex w-full items-baseline gap-3 py-2 text-left transition-colors',
+                          active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                        )}
+                        aria-current={active ? 'step' : undefined}
+                      >
+                        <span className="font-mono text-xs">0{i + 1}</span>
+                        <span className={cn('font-display font-bold transition-[font-size] duration-300', active ? 'text-xl' : 'text-base')}>
+                          {s.label}
+                        </span>
+                      </button>
+                      {/* abre/fecha via CSS (grid 0fr → 1fr): animar height "auto" com o Motion
+                          dispara um scrollTo interno que cancelaria a rolagem suave dos links */}
+                      <div
+                        className={cn(
+                          'grid transition-[grid-template-rows,opacity] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)]',
+                          active ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                        )}
+                      >
+                        <p className="overflow-hidden pl-8 text-sm leading-relaxed text-muted-foreground">
+                          <span className="block pb-3">{s.text}</span>
+                        </p>
+                      </div>
+                    </li>
+                  )
+                })}
+              </ol>
             </div>
           </div>
         </motion.div>
@@ -226,13 +204,13 @@ export default function HeroStory() {
         {/* Dica de scroll */}
         <motion.button
           style={{ opacity: heroOpacity }}
-          onClick={() => goToProgress(STORY_STEPS[0].focus)}
+          onClick={() => goToProgress(focusAt(0))}
           className={cn(
             'absolute right-[max(1rem,calc((100vw-72rem)/2))] bottom-8 z-30 inline-flex items-center gap-3 rounded-full border border-border bg-card/70 py-1.5 pr-1.5 pl-4 text-sm font-semibold shadow-[var(--shadow-card)] backdrop-blur-md',
             !heroLive && 'pointer-events-none'
           )}
         >
-          Role para ver o código virar tela
+          Role para ver a interface por dentro
           <span className="grid size-8 place-items-center rounded-full bg-foreground text-background">
             <ArrowDown className="size-4" />
           </span>
@@ -243,199 +221,108 @@ export default function HeroStory() {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Etapas do palco                                                    */
+/*  Interface em camadas                                               */
 /* ------------------------------------------------------------------ */
 
-type StageProps = { p: ReturnType<typeof useScroll>['scrollYProgress'] }
-
-/** Editor: inclinado no Hero; as linhas explodem em profundidade e somem */
-function CodeStage({ p }: StageProps) {
-  const at = [0, K.start, K.explode, K.web]
+function Interface({ p }: { p: MotionValue<number> }) {
   return (
     <Part
       p={p}
-      at={at}
-      track={{ rotateY: [-16, -16, -32, -32], rotateX: [7, 7, 16, 16], rotate: [-2, -2, 0, 0], scale: [1, 1, 0.94, 0.86], z: [0, 0, -60, -160] }}
-      className="top-[60px] left-[120px] h-[500px] w-[760px]"
-    >
-      {/* fundo da janela some para as linhas flutuarem */}
-      <Part p={p} at={at} track={{ opacity: [1, 1, 0.12, 0] }} className="inset-0">
-        <Ink dark depth={9} radius={22} className="size-full">
-          <EditorChrome />
-        </Ink>
-      </Part>
-
-      {CODE_LINES.map((line, i) => (
-        <Part
-          key={i}
-          p={p}
-          at={[0, K.start, K.explode, K.web - 0.03, K.web]}
-          track={{
-            z: [0, 0, 40 + (i % 4) * 55, 40 + (i % 4) * 55, 120],
-            x: [0, 0, (rand(i) - 0.5) * 120, (rand(i) - 0.5) * 140, (rand(i) - 0.5) * 160],
-            y: [0, 0, (i - 5) * 9, (i - 5) * 12, (i - 5) * 16],
-            rotate: [0, 0, (rand(i + 9) - 0.5) * 10, (rand(i + 9) - 0.5) * 12, 0],
-            opacity: [1, 1, 1, 0.9, 0],
-          }}
-          className="left-[14px]"
-          style={{ top: 68 + i * 34 }}
-        >
-          <CodeLine tokens={line} n={i + 1} />
-        </Part>
-      ))}
-    </Part>
-  )
-}
-
-/** Peça que "voa" de um ponto espalhado até a posição montada */
-function Assemble({
-  p,
-  from,
-  to,
-  offset,
-  className,
-  style,
-  children,
-}: StageProps & {
-  from: number
-  to: number
-  offset: { x?: number; y?: number; z?: number; rotate?: number }
-  className?: string
-  style?: CSSProperties
-  children: ReactNode
-}) {
-  return (
-    <Part
-      p={p}
-      at={[from, to]}
+      at={ISO_AT}
       track={{
-        x: [offset.x ?? 0, 0],
-        y: [offset.y ?? 0, 0],
-        z: [offset.z ?? 200, 0],
-        rotate: [offset.rotate ?? 0, 0],
-        opacity: [0, 1],
+        ...ISO,
+        x: [0, 0, 20, 20, -150],
+        y: [0, 0, 115, 115, 20],
+        scale: [1, 1, 0.84, 0.84, 1.08],
       }}
-      className={className}
-      style={style}
+      className="top-[132px] left-[220px] h-[360px] w-[560px]"
     >
-      {children}
-    </Part>
-  )
-}
-
-/** Interface web: monta a partir do código e depois recua para dar lugar ao app */
-function WebStage({ p }: StageProps) {
-  const a = K.explode - 0.02
-  return (
-    <Part
-      p={p}
-      at={[K.web, K.webEnd, K.mobile, K.mobileEnd, K.api]}
-      track={{ x: [0, 0, -80, -80, -150], y: [0, 0, -10, -10, -20], scale: [1, 1, 0.86, 0.86, 0.8], rotateY: [0, 0, 14, 14, 18] }}
-      className="top-[110px] left-[40px] h-[430px] w-[640px]"
-    >
-      <Part
-        p={p}
-        at={[a, K.web]}
-        track={{ opacity: [0, 1], z: [-220, 0], rotateX: [-24, 0], scale: [0.85, 1] }}
-        className="inset-0"
-      >
-        <Ink className="size-full">
-          <BrowserBar />
-        </Ink>
-      </Part>
-
-      <Assemble p={p} from={a + 0.01} to={K.web} offset={{ x: -140, y: -90, z: 260, rotate: -10 }} className="top-[76px] left-[30px] w-[300px]">
-        <WebHeadline />
-      </Assemble>
-      <Assemble p={p} from={a + 0.02} to={K.web} offset={{ x: 160, y: -70, z: 320, rotate: 12 }} className="top-[76px] left-[345px] h-[220px] w-[265px]">
-        <WebImage />
-      </Assemble>
-      {[INK, BLUE, INK].map((accent, i) => (
-        <Assemble
-          key={i}
-          p={p}
-          from={a + 0.03 + i * 0.008}
-          to={K.web}
-          offset={{ x: (i - 1) * 120, y: 140, z: 240, rotate: (i - 1) * 14 }}
-          className="top-[330px] h-[64px] w-[184px]"
-          style={{ left: 30 + i * 200 }}
-        >
-          <WebCard accent={accent} />
-        </Assemble>
+      {LAYER_VIEWS.map((View, i) => (
+        <Layer key={i} p={p} index={i}>
+          <View />
+        </Layer>
       ))}
     </Part>
   )
 }
 
-/** App mobile: entra na frente da interface web */
-function MobileStage({ p }: StageProps) {
-  const a = K.webEnd + 0.01
+/** Camada: sobe em profundidade, acende na sua vez e desce de volta no final */
+function Layer({ p, index, children }: { p: MotionValue<number>; index: number; children: ReactNode }) {
+  const f = focusAt(index)
+  const base = index * LAYER_GAP
+  const dimStart = Math.min(K.exploded + 0.03, f - 0.07)
+  const dim = index === 0 ? 0.6 : 0.42
+  const at = [0, K.start, K.exploded, dimStart, f - 0.05, f - 0.015, f + 0.06, f + 0.095, K.collapse, K.finale]
+  const opacity = [1, 1, 1, dim, dim, 1, 1, dim, 1, 1]
+
+  // Opacidade só nas folhas: `opacity < 1` num elemento 3D achataria os filhos no plano dele.
+  return (
+    <Part p={p} at={at} track={{ z: [0, 0, base, base, base, base, base, base, base, 0] }} className="inset-0">
+      <Part p={p} at={at} track={{ opacity }} className="inset-0">
+        {/* placa translúcida: deixa cada camada legível como uma folha separada */}
+        {index > 0 && (
+          <Part
+            p={p}
+            at={[K.start, K.exploded, K.collapse - 0.03, K.collapse]}
+            track={{ opacity: [0, 1, 1, 0] }}
+            className="inset-0 rounded-[22px] border-2 border-dashed border-sky-300/50 bg-sky-200/[0.07]"
+          />
+        )}
+        {children}
+      </Part>
+
+      {/* fio da etiqueta até a camada (no plano da camada) */}
+      <Part
+        p={p}
+        at={[K.exploded - 0.03, K.exploded, K.collapse - 0.04, K.collapse]}
+        track={{ opacity: [0, 1, 1, 0] }}
+        className="top-[330px] -left-[70px] w-[70px]"
+        style={{ borderTop: `2.5px dashed ${INK}` }}
+      />
+
+      {/* etiqueta: gira ao contrário da tela para ficar de frente */}
+      <Part
+        p={p}
+        at={[K.start, K.exploded - 0.03, K.exploded, dimStart, f - 0.05, f - 0.015, f + 0.06, f + 0.095, K.collapse - 0.04, K.collapse]}
+        track={{
+          rotate: [0, 36, 36, 36, 36, 36, 36, 36, 36, 0],
+          rotateX: [-7, -56, -56, -56, -56, -56, -56, -56, -56, 0],
+          opacity: [0, 0, 1, dim, dim, 1, 1, dim, dim, 0],
+          scale: [0.82, 0.82, 0.82, 0.74, 0.74, 0.88, 0.88, 0.74, 0.74, 0.82],
+        }}
+        className="-left-[70px] origin-top-left"
+        style={{ translate: '-100% 0', top: index === 0 ? 350 : 300 }}
+      >
+        <LayerTag index={index} label={LAYERS[index].label} tag={LAYERS[index].tag} />
+      </Part>
+    </Part>
+  )
+}
+
+/** Final: a mesma interface no app mobile */
+function PhoneFinale({ p }: { p: MotionValue<number> }) {
+  const a = K.collapse + 0.02
   return (
     <Part
       p={p}
-      at={[K.mobileEnd, K.api]}
-      track={{ x: [0, -170], y: [0, -10] }}
-      className="top-[70px] left-[600px] h-[500px] w-[250px]"
+      at={[a, K.finale]}
+      track={{ opacity: [0, 1], x: [220, 0], y: [60, 0], z: [260, 0], rotate: [14, -3], rotateY: [-40, 0] }}
+      className="top-[70px] left-[650px] h-[470px] w-[236px]"
     >
-      <Part
-        p={p}
-        at={[a, K.mobile]}
-        track={{ opacity: [0, 1], y: [200, 0], z: [320, 0], rotate: [16, 0], rotateY: [-40, 0] }}
-        className="inset-0"
-      >
-        <Ink radius={40} depth={9} className="size-full" />
-      </Part>
-      <Assemble p={p} from={a + 0.02} to={K.mobile} offset={{ y: -60, z: 200 }} className="inset-x-0 top-0">
+      <Ink radius={40} depth={9} className="size-full">
         <PhoneHeader />
-      </Assemble>
-      <Assemble p={p} from={a + 0.03} to={K.mobile} offset={{ x: 120, y: -40, z: 260, rotate: 10 }} className="top-[112px] right-5 left-5 h-[130px]">
-        <PhoneCard />
-      </Assemble>
-      {[INK, VIOLET, INK].map((dot, i) => (
-        <Assemble
-          key={i}
-          p={p}
-          from={a + 0.04 + i * 0.008}
-          to={K.mobile}
-          offset={{ x: -120 + i * 40, y: 60, z: 220, rotate: -8 + i * 8 }}
-          className="left-6"
-          style={{ top: 268 + i * 46 }}
-        >
-          <PhoneRow dot={dot} />
-        </Assemble>
-      ))}
-      <Assemble p={p} from={a + 0.06} to={K.mobile} offset={{ y: 120, z: 180 }} className="inset-x-5 bottom-5">
-        <PhoneTabBar />
-      </Assemble>
+        <div className="mx-5 mt-4 h-[120px]">
+          <PhoneCard />
+        </div>
+        <div className="mt-5 flex flex-col gap-4 px-6">
+          <PhoneRow dot={INK} />
+          <PhoneRow dot={VIOLET} />
+          <PhoneRow dot={INK} />
+        </div>
+        <div className="absolute inset-x-5 bottom-5">
+          <PhoneTabBar />
+        </div>
+      </Ink>
     </Part>
-  )
-}
-
-/** Integração: terminal com a resposta da API e dados correndo até o app */
-function ApiStage({ p }: StageProps) {
-  const a = K.mobileEnd + 0.01
-  return (
-    <>
-      <Part p={p} at={[a + 0.05, K.api]} track={{ opacity: [0, 1] }} className="inset-0">
-        <svg width={STAGE_W} height={STAGE_H} viewBox={`0 0 ${STAGE_W} ${STAGE_H}`} className="overflow-visible">
-          <path id="api-wire" d="M 690 250 C 810 250, 865 300, 865 380" fill="none" stroke="white" strokeOpacity="0.55" strokeWidth="3" strokeDasharray="8 10" />
-          {[0, 0.55, 1.1].map((delay) => (
-            <circle key={delay} r="7" fill="#7dd3fc" stroke={INK} strokeWidth="2.5">
-              <animateMotion dur="1.6s" begin={`${delay}s`} repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear">
-                <mpath href="#api-wire" />
-              </animateMotion>
-            </circle>
-          ))}
-        </svg>
-      </Part>
-      <Part
-        p={p}
-        at={[a, K.api]}
-        track={{ opacity: [0, 1], x: [180, 0], y: [80, 0], z: [260, 0], rotate: [10, -3] }}
-        className="top-[380px] left-[715px] h-[205px] w-[300px]"
-      >
-        <ApiTerminal />
-      </Part>
-    </>
   )
 }

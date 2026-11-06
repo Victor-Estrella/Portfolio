@@ -1,13 +1,30 @@
+import { useRef } from 'react'
 import { motion } from 'motion/react'
 import { Check } from 'lucide-react'
 
 import AuroraBackground from '@/components/AuroraBackground'
+import { useSmoothScroll } from '@/hooks/useSmoothScroll'
 import ProductCard from '@/components/experience/ProductCard'
 import SectionHeading from '@/components/sections/SectionHeading'
 import { Badge } from '@/components/ui/badge'
 import { experience } from '@/data/experience'
 import AnimatedContent from '@reactbits/AnimatedContent/AnimatedContent'
 import SpotlightCard from '@reactbits/SpotlightCard/SpotlightCard'
+
+/** Linha da timeline "desenhada" conforme a rolagem */
+function TimelineRail() {
+  const ref = useRef<HTMLSpanElement>(null)
+  const progress = useSmoothScroll(ref, ['start 0.75', 'end 0.55'])
+  return (
+    <span ref={ref} aria-hidden className="absolute top-10 bottom-0 left-[5px] hidden w-px md:block">
+      <span className="absolute inset-0 bg-border" />
+      <motion.span
+        className="absolute inset-0 origin-top bg-[linear-gradient(to_bottom,var(--primary),var(--accent))]"
+        style={{ scaleY: progress }}
+      />
+    </span>
+  )
+}
 
 export default function Experience() {
   return (
@@ -43,10 +60,7 @@ export default function Experience() {
                 </span>
                 {role.current && <Badge variant="success">Atual</Badge>}
               </div>
-              <span
-                aria-hidden
-                className="absolute top-10 bottom-0 left-[5px] hidden w-px bg-[linear-gradient(to_bottom,var(--primary),transparent)] md:block"
-              />
+              <TimelineRail />
 
               <div className="min-w-0">
                 {/* Cargo */}

@@ -130,7 +130,7 @@ export default function Contact() {
                         href={channel.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center gap-3.5 rounded-2xl border border-border bg-card/40 px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-card"
+                        className="group flex items-center gap-3.5 rounded-2xl border border-border bg-card/40 px-4 py-3 ink-hover hover:bg-card"
                       >
                         <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-border bg-foreground/[0.03]">
                           <channel.icon className="size-4.5" />

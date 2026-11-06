@@ -1,5 +1,6 @@
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import SectionRail from '@/components/layout/SectionRail'
 import Hero from '@/components/sections/Hero'
 import About from '@/components/sections/About'
 import Experience from '@/components/sections/Experience'
@@ -11,6 +12,7 @@ function App() {
   return (
     <div className="relative min-h-screen overflow-x-clip bg-background">
       <Navbar />
+      <SectionRail />
 
       <main className="relative z-10">
         <Hero />
