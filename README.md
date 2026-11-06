@@ -6,13 +6,15 @@
 
 - React, TypeScript, Vite
 - Tailwind CSS v4 (tokens de tema light/dark)
-- Motion (animações), React Bits (TextType, Particles, SpotlightCard…)
+- Motion (animações), React Bits (TextType, SpotlightCard…)
+- História "Do código à tela" guiada pelo scroll (Motion + transformações 3D em CSS)
 - Devicon (SVGs individuais), Lucide
 
 ## ✨ Funcionalidades
 
 - Light e Dark Mode (respeita o sistema na 1ª visita e salva a escolha)
 - Seção de experiência profissional e produtos
+- Formulário de contato real (Vercel Function + Resend — veja `.env.example`)
 - Layout responsivo (desktop, tablet, mobile)
 - Animações modernas e partículas
 - Cards de projetos com modal detalhado

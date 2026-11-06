@@ -1,12 +1,12 @@
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
 import { motion } from 'motion/react'
-import { ArrowUpRight, Check, Copy, Download, Mail, MapPin, Send } from 'lucide-react'
+import { ArrowUpRight, Check, Copy, Download, MapPin } from 'lucide-react'
 
 import AuroraBackground from '@/components/AuroraBackground'
+import ContactForm from '@/components/contact/ContactForm'
 import { Github, Linkedin, Whatsapp } from '@/components/icons'
 import SectionHeading from '@/components/sections/SectionHeading'
 import { Button, buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 import { profile } from '@/data/profile'
 import AnimatedContent from '@reactbits/AnimatedContent/AnimatedContent'
 import SpotlightCard from '@reactbits/SpotlightCard/SpotlightCard'
@@ -38,9 +38,6 @@ const channels = [
   },
 ] as const
 
-const fieldClass =
-  'w-full rounded-xl border border-input bg-background/60 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-[border-color,box-shadow] outline-none focus:border-primary/60 focus:ring-[3px] focus:ring-ring/30'
-
 export default function Contact() {
   const [copied, setCopied] = useState(false)
 
@@ -52,20 +49,6 @@ export default function Contact() {
     } catch {
       /* clipboard indisponível — o link mailto continua funcionando */
     }
-  }
-
-  // Sem back-end: o formulário monta a mensagem e abre o cliente de e-mail do visitante.
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const data = new FormData(e.currentTarget)
-    const name = String(data.get('name') ?? '').trim()
-    const company = String(data.get('company') ?? '').trim()
-    const message = String(data.get('message') ?? '').trim()
-
-    const subject = `Contato pelo portfólio — ${name}${company ? ` (${company})` : ''}`
-    const body = `${message}\n\n—\n${name}${company ? `\n${company}` : ''}`
-
-    window.location.href = `mailto:${profile.contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
   }
 
   return (
@@ -164,46 +147,7 @@ export default function Contact() {
               </div>
 
               {/* Formulário */}
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4 lg:border-l lg:border-border lg:pl-12">
-                <div>
-                  <h3 className="font-display text-xl font-bold">Envie uma mensagem</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Ao enviar, seu aplicativo de e-mail abre com a mensagem pronta.
-                  </p>
-                </div>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="flex flex-col gap-1.5 text-xs font-medium text-muted-foreground">
-                    Nome
-                    <input name="name" required autoComplete="name" placeholder="Seu nome" className={fieldClass} />
-                  </label>
-                  <label className="flex flex-col gap-1.5 text-xs font-medium text-muted-foreground">
-                    Empresa <span className="sr-only">(opcional)</span>
-                    <input name="company" autoComplete="organization" placeholder="Opcional" className={fieldClass} />
-                  </label>
-                </div>
-
-                <label className="flex flex-col gap-1.5 text-xs font-medium text-muted-foreground">
-                  Mensagem
-                  <textarea
-                    name="message"
-                    required
-                    rows={6}
-                    placeholder="Conte um pouco sobre a vaga ou o projeto…"
-                    className={cn(fieldClass, 'resize-none')}
-                  />
-                </label>
-
-                <Button type="submit" size="lg" variant="gradient" className="mt-1 w-full sm:w-auto sm:self-start">
-                  <Send className="size-4" />
-                  Enviar mensagem
-                </Button>
-
-                <p className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Mail className="size-3.5" />
-                  Destino: {profile.contact.email}
-                </p>
-              </form>
+              <ContactForm />
             </div>
           </SpotlightCard>
         </AnimatedContent>
