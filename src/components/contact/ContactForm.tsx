@@ -177,7 +177,6 @@ export default function ContactForm() {
                 id="contact-message"
                 name="message"
                 required
-                minLength={10}
                 maxLength={4000}
                 rows={5}
                 placeholder="Conte um pouco sobre a vaga ou o projeto…"

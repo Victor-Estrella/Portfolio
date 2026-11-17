@@ -18,7 +18,7 @@ const LIMITS = {
   name: { min: 2, max: 80 },
   company: { max: 100 },
   email: { max: 160 },
-  message: { min: 10, max: 4000 },
+  message: { min: 1, max: 4000 },
 }
 const MAX_BODY_CHARS = 12_000
 /** Formulários preenchidos mais rápido que isso são quase sempre robôs. */
@@ -114,7 +114,7 @@ export async function POST(request: Request): Promise<Response> {
   if (name.length < LIMITS.name.min || name.length > LIMITS.name.max) fields.name = 'Informe seu nome.'
   if (!EMAIL_RE.test(email) || email.length > LIMITS.email.max) fields.email = 'Informe um e-mail válido.'
   if (company.length > LIMITS.company.max) fields.company = 'Nome da empresa muito longo.'
-  if (message.length < LIMITS.message.min) fields.message = 'Escreva uma mensagem um pouco maior.'
+  if (message.length < LIMITS.message.min) fields.message = 'Escreva uma mensagem.'
   if (message.length > LIMITS.message.max) fields.message = 'Mensagem muito longa.'
   if (Object.keys(fields).length > 0) return json({ ok: false, error: 'validation', fields }, 422)
 
