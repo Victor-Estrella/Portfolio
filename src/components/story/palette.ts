@@ -1,20 +1,20 @@
 /** Paleta e conteúdo fixos da história "Do código à tela" (iguais nos dois temas). */
 
-export const INK = '#12141a'
-export const PAPER = '#fbfaf6'
+export const INK = '#0b1226'
+export const PAPER = '#f4f8ff'
 export const BLUE = '#2563eb'
-export const VIOLET = '#7c3aed'
+export const NAVY = '#1e40af'
 export const SKY = '#38bdf8'
 
 export const C = {
-  kw: '#c792ea',
-  fn: '#82aaff',
-  str: '#c3e88d',
-  tag: '#f78c6c',
-  attr: '#ffcb6b',
-  txt: '#e9e7e1',
-  pun: '#89ddff',
-  dim: '#6b7280',
+  kw: '#93c5fd',
+  fn: '#60a5fa',
+  str: '#a5f3fc',
+  tag: '#7dd3fc',
+  attr: '#bfdbfe',
+  txt: '#e4edfb',
+  pun: '#67e8f9',
+  dim: '#64748b',
 }
 
 /** Linhas do `Portfolio.tsx` (tokens: [texto, cor]) */

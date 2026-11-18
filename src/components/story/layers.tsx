@@ -5,9 +5,9 @@
  */
 import type { CSSProperties, ReactNode } from 'react'
 
-import { BLUE, INK, PAPER, SKY, VIOLET } from './palette'
+import { BLUE, INK, PAPER, SKY, NAVY } from './palette'
 
-const line = (w: number, color = '#c9c6bd', h = 8) => (
+const line = (w: number, color = '#c3d0e6', h = 8) => (
   <span className="block rounded-full" style={{ width: w, height: h, background: color }} />
 )
 
@@ -94,7 +94,7 @@ export function LayerContent() {
         </div>
       </div>
 
-      <div className="absolute top-[74px] left-[302px] h-[164px] w-[236px] overflow-hidden rounded-[14px]" style={{ background: `linear-gradient(140deg, ${BLUE}, ${VIOLET})` }}>
+      <div className="absolute top-[74px] left-[302px] h-[164px] w-[236px] overflow-hidden rounded-[14px]" style={{ background: `linear-gradient(140deg, ${BLUE}, ${NAVY})` }}>
         <span className="absolute top-6 right-8 size-12 rounded-full" style={{ background: SKY, border: `2.5px solid ${INK}` }} />
         <span className="absolute -bottom-12 -left-4 h-28 w-[130%] rounded-[50%]" style={{ background: PAPER, opacity: 0.85 }} />
       </div>
@@ -104,7 +104,7 @@ export function LayerContent() {
           <span className="size-6 rounded-lg" style={{ background: dot }} />
           <span className="flex flex-col gap-1.5">
             {line(80, '#6b7280', 7)}
-            {line(54, '#c9c6bd', 7)}
+            {line(54, '#c3d0e6', 7)}
           </span>
         </div>
       ))}
@@ -145,7 +145,7 @@ export function LayerData() {
         <span className="rounded px-1.5 py-0.5 font-mono text-[12px] font-bold" style={{ background: '#28c840', color: INK }}>
           200
         </span>
-        <span className="font-mono text-[13px]" style={{ color: '#e9e7e1' }}>
+        <span className="font-mono text-[13px]" style={{ color: '#e4edfb' }}>
           GET /api/projects
         </span>
       </div>

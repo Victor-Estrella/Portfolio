@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'motion/react'
-import { ArrowUpRight, Check, Copy, Download, MapPin } from 'lucide-react'
+import { ArrowUpRight, Check, Copy, FileText, MapPin } from 'lucide-react'
 
 import AuroraBackground from '@/components/AuroraBackground'
 import ContactForm from '@/components/contact/ContactForm'
@@ -108,11 +108,10 @@ export default function Contact() {
                     </Button>
                     <a
                       href={profile.resumeUrl}
-                      download={profile.resumeFileName}
                       className={buttonVariants({ size: 'sm', variant: 'ghost' })}
                     >
-                      <Download className="size-3.5" />
-                      Currículo (PDF)
+                      <FileText className="size-3.5" />
+                      Currículo
                     </a>
                   </div>
                 </div>

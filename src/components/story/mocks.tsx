@@ -6,7 +6,7 @@
 import type { CSSProperties, ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
-import { C, CODE_LINES, INK, PAPER, SKY, VIOLET } from './palette'
+import { C, CODE_LINES, INK, PAPER, SKY, NAVY } from './palette'
 
 /** Superfície ilustrada: contorno de tinta + sombra sólida (espessura) */
 export function Ink({
@@ -61,13 +61,13 @@ export function CodeLine({ tokens, n }: { tokens: [string, string][]; n: number 
 
 export function EditorChrome() {
   return (
-    <div className="flex h-12 items-center gap-2 border-b-2 px-5" style={{ borderColor: '#262a33' }}>
+    <div className="flex h-12 items-center gap-2 border-b-2 px-5" style={{ borderColor: '#1f2a44' }}>
       <span className="size-3.5 rounded-full" style={{ background: '#ff5f57' }} />
       <span className="size-3.5 rounded-full" style={{ background: '#febc2e' }} />
       <span className="size-3.5 rounded-full" style={{ background: '#28c840' }} />
       <span
         className="ml-4 rounded-t-lg px-4 py-1.5 font-mono text-[15px]"
-        style={{ background: '#1d2029', color: C.txt }}
+        style={{ background: '#17203a', color: C.txt }}
       >
         Portfolio.tsx
       </span>
@@ -89,7 +89,7 @@ export function CodeWindow({ className, style }: { className?: string; style?: C
   )
 }
 
-const bar = (w: number, color = '#c9c6bd') => (
+const bar = (w: number, color = '#c3d0e6') => (
   <span className="block h-[9px] rounded-full" style={{ width: w, background: color }} />
 )
 
@@ -110,7 +110,7 @@ export function PhoneHeader() {
 
 export function PhoneCard() {
   return (
-    <div className="relative size-full rounded-2xl p-4" style={{ background: VIOLET, border: `2.5px solid ${INK}` }}>
+    <div className="relative size-full rounded-2xl p-4" style={{ background: NAVY, border: `2.5px solid ${INK}` }}>
       <span className="absolute top-4 right-4 size-10 rounded-full" style={{ background: PAPER }} />
       <p className="absolute bottom-4 left-4 font-display text-[17px] font-bold" style={{ color: PAPER }}>
         Próxima entrega

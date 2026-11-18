@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { ArrowRight, Download, Mail } from 'lucide-react'
+import { ArrowRight, FileText, Mail } from 'lucide-react'
 
 import SocialLinks from '@/components/SocialLinks'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -97,11 +97,10 @@ export default function HeroContent() {
 
         <a
           href={profile.resumeUrl}
-          download={profile.resumeFileName}
           className={cn(buttonVariants({ variant: 'outline', size: 'lg' }), 'w-full sm:w-auto')}
         >
-          <Download className="size-4" />
-          Baixar currículo
+          <FileText className="size-4" />
+          Ver currículo
         </a>
 
         <SocialLinks

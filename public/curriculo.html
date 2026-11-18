@@ -1,0 +1,751 @@
+<!doctype html>
+<html lang="pt-BR" data-lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Currículo | Victor Henrique Estrella Carracci</title>
+    <meta
+      name="description"
+      content="Currículo de Victor Henrique Estrella Carracci — Desenvolvedor Front-End & Mobile (React, React Native, Next.js e TypeScript)."
+    />
+    <meta name="author" content="Victor Henrique Estrella Carracci" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="theme-color" content="#eaf2ff" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      Currículo bilíngue (PT-BR / EN). É a FONTE dos PDFs:
+      `npm run resume:pdf` gera public/curriculo-victor-carracci.pdf (PT) e
+      public/curriculo-victor-carracci-en.pdf (EN) a partir desta página.
+      Para editar o conteúdo, mexa só no objeto CV mais abaixo e rode o script.
+    -->
+
+    <style>
+      :root {
+        --bg: #eaf2ff;
+        --ink: #0b1b3a;
+        --muted: #4a5d80;
+        --line: #c5d4ee;
+        --blue-1: #0ea5e9;
+        --blue-2: #2563eb;
+        --paper: #ffffff;
+        --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          radial-gradient(900px 420px at 15% -10%, #cfe3ff 0%, transparent 70%),
+          radial-gradient(800px 420px at 95% -5%, #d7e8ff 0%, transparent 70%), var(--bg);
+        color: var(--ink);
+        font-family: var(--sans);
+      }
+
+      /* ------------------------------ Barra superior ------------------------------ */
+      .toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        padding: 14px 16px;
+        background: color-mix(in srgb, var(--bg) 82%, transparent);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      }
+
+      .toolbar-inner {
+        width: 100%;
+        max-width: 210mm;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 40px;
+        padding: 0 16px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        font: 600 14px/1 var(--sans);
+        text-decoration: none;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          border-color 0.2s,
+          box-shadow 0.2s,
+          transform 0.2s;
+      }
+
+      .btn:hover {
+        border-color: var(--blue-2);
+        box-shadow: 0 6px 18px -10px rgb(37 99 235 / 0.55);
+      }
+
+      .btn:focus-visible,
+      .lang button:focus-visible {
+        outline: 2px solid var(--blue-2);
+        outline-offset: 2px;
+      }
+
+      .btn svg {
+        width: 16px;
+        height: 16px;
+        flex: none;
+      }
+
+      .btn-primary {
+        border-color: transparent;
+        color: #fff;
+        background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+      }
+
+      .btn-primary:hover {
+        border-color: transparent;
+        box-shadow: 0 10px 24px -10px rgb(37 99 235 / 0.8);
+        filter: brightness(1.06);
+      }
+
+      .lang {
+        display: inline-flex;
+        padding: 3px;
+        gap: 2px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+
+      .lang button {
+        height: 32px;
+        min-width: 44px;
+        padding: 0 12px;
+        border: 0;
+        border-radius: 9px;
+        background: transparent;
+        color: var(--muted);
+        font: 700 13px/1 var(--sans);
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+
+      .lang button[aria-pressed="true"] {
+        background: linear-gradient(135deg, var(--blue-1), var(--blue-2));
+        color: #fff;
+      }
+
+      /* ------------------------------ Folha (A4) ------------------------------ */
+      .sheet-wrap {
+        padding: 28px 16px 56px;
+      }
+
+      .sheet {
+        width: 100%;
+        max-width: 210mm;
+        margin: 0 auto;
+        padding: 18mm 18mm 20mm;
+        background: var(--paper);
+        color: #1a2438;
+        border-radius: 6px;
+        box-shadow:
+          0 1px 2px rgb(11 27 58 / 0.06),
+          0 30px 70px -30px rgb(30 64 175 / 0.45);
+        font-family: var(--sans);
+        font-size: 9.5pt;
+        line-height: 1.42;
+        font-feature-settings: "cv11", "ss01";
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .sheet h1 {
+        margin: 0 0 6pt;
+        font: 700 20pt/1.15 var(--sans);
+        text-align: center;
+        letter-spacing: -0.02em;
+        color: #0b1b3a;
+      }
+
+      .sheet .contact {
+        margin: 0 0 12pt;
+        font-size: 10pt;
+        text-align: center;
+        line-height: 1.55;
+        color: #1a2438;
+      }
+
+      .contact .item {
+        display: block;
+        overflow-wrap: anywhere;
+      }
+
+      .contact a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .contact a:hover {
+        text-decoration: underline;
+      }
+
+      .sheet h2 {
+        margin: 12pt 0 5pt;
+        padding-bottom: 3pt;
+        border-bottom: 1px solid #c5d4ee;
+        font: 700 9.5pt/1.2 var(--sans);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #0a0a0a;
+        break-after: avoid;
+      }
+
+      .sheet p {
+        margin: 0 0 4pt;
+        text-align: left;
+      }
+
+      .sheet ul {
+        margin: 2pt 0 6pt;
+        padding-left: 15pt;
+      }
+
+      .sheet li {
+        margin: 0 0 2pt;
+        text-align: left;
+      }
+
+      .sheet li::marker {
+        color: #0a0a0a;
+      }
+
+      .entry {
+        break-inside: avoid-page;
+        margin-bottom: 6pt;
+      }
+
+      .entry-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 12pt;
+        align-items: baseline;
+      }
+
+      .entry-title {
+        font-weight: 600;
+        color: #0b1b3a;
+      }
+
+      .entry-date {
+        flex: none;
+        font-size: 9pt;
+        font-weight: 500;
+        color: #5a6b8c;
+      }
+
+      .role {
+        margin: 0 0 3pt;
+        color: #3b4a66;
+        font-weight: 500;
+      }
+
+      .meta {
+        font-size: 9.5pt;
+        color: #5a6b8c;
+        margin-bottom: 2pt;
+      }
+
+      .skill-row {
+        margin: 0 0 3pt;
+        text-align: left;
+      }
+
+      .skill-row b {
+        font-weight: 600;
+        color: #0b1b3a;
+      }
+
+      .products {
+        margin: 3pt 0 5pt;
+        padding: 5pt 8pt;
+        border-left: 3px solid #2563eb;
+        background: #f1f6ff;
+        font-size: 9.5pt;
+        text-align: left;
+      }
+
+      .products b {
+        font-weight: 600;
+        color: #0b1b3a;
+      }
+
+      @media screen and (max-width: 860px) {
+        .sheet {
+          padding: 22px 18px 28px;
+          font-size: 10pt;
+        }
+        .sheet h1 {
+          font-size: 16pt;
+        }
+        .entry-head {
+          flex-direction: column;
+          gap: 0;
+        }
+
+      }
+
+      /* ------------------------------ Impressão / PDF ------------------------------ */
+      @page {
+        size: A4;
+        margin: 12mm 14mm;
+      }
+
+      @media print {
+        html,
+        body {
+          background: #fff !important;
+        }
+        .toolbar {
+          display: none !important;
+        }
+        .sheet-wrap {
+          padding: 0;
+        }
+        .sheet {
+          max-width: none;
+          padding: 0;
+          border-radius: 0;
+          box-shadow: none;
+        }
+        a {
+          color: inherit !important;
+        }
+        .contact a {
+          color: inherit !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="toolbar">
+      <div class="toolbar-inner">
+        <a class="btn" href="/" id="back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m12 19-7-7 7-7" />
+            <path d="M19 12H5" />
+          </svg>
+          <span id="t-back">Voltar ao portfólio</span>
+        </a>
+
+        <div class="actions">
+          <div class="lang" role="group" aria-label="Idioma / Language">
+            <button type="button" data-set-lang="pt" aria-pressed="true">PT</button>
+            <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+          </div>
+
+          <a class="btn btn-primary" id="download" href="/curriculo-victor-carracci.pdf" download="Curriculo-Victor-Carracci.pdf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <path d="m7 10 5 5 5-5" />
+              <path d="M12 15V3" />
+            </svg>
+            <span id="t-download">Baixar PDF</span>
+          </a>
+
+          <button type="button" class="btn" id="print">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 9V2h12v7" />
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+              <path d="M6 14h12v8H6z" />
+            </svg>
+            <span id="t-print">Imprimir</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="sheet-wrap">
+      <article class="sheet" id="cv" aria-live="polite"></article>
+    </main>
+
+    <script>
+      (function () {
+        'use strict'
+
+        var PHONE = '+55 (11) 97147-8515'
+        var EMAIL = 'victorhcarracci@gmail.com'
+        var LINKEDIN = 'https://www.linkedin.com/in/victorcarracci'
+        var GITHUB = 'https://github.com/Victor-Estrella'
+        var SITE = 'https://portfolio-victor-carracci.vercel.app/'
+
+        var PRODUCTS = 'Cage CRM, Cage Mobile, Pulso, Pulso Mobile, Pulso Desktop, Pontic, Pontic Mobile, Trevo'
+
+        /* ------------------------------------------------------------------ */
+        /*  CONTEÚDO — edite aqui e rode `npm run resume:pdf`                  */
+        /* ------------------------------------------------------------------ */
+        var CV = {
+          pt: {
+            htmlLang: 'pt-BR',
+            title: 'Currículo | Victor Henrique Estrella Carracci',
+            ui: { back: 'Voltar ao portfólio', download: 'Baixar PDF', print: 'Imprimir' },
+            pdf: { href: '/curriculo-victor-carracci.pdf', name: 'Curriculo-Victor-Carracci.pdf' },
+            location: 'São Paulo – SP',
+            contactLabels: { email: 'E-mail', phone: 'Telefone', linkedin: 'LinkedIn', github: 'GitHub', site: 'Portfólio' },
+            headings: {
+              objective: 'Objetivo',
+              summary: 'Resumo de Qualificações',
+              education: 'Formação Acadêmica',
+              languages: 'Idiomas',
+              skills: 'Competências Técnicas',
+              experience: 'Experiência Profissional',
+              complementary: 'Formação Complementar'
+            },
+            objective: 'Estágio/Desenvolvedor Júnior em Desenvolvimento de Software',
+            summary:
+              'Desenvolvedor Front-End com experiência profissional no desenvolvimento de aplicações web e mobile utilizando React, React Native, Next.js e TypeScript. Atuação na criação de interfaces responsivas, integração com APIs REST, desenvolvimento de novas funcionalidades e manutenção de sistemas. Possuo conhecimentos em JavaScript, Tailwind CSS, Git, Docker e boas práticas como Clean Code e SOLID. Busco contribuir com soluções escaláveis, de qualidade e com foco na experiência do usuário.',
+            education: [
+              { title: 'Tecnólogo em Análise e Desenvolvimento de Sistemas - FIAP', note: 'Conclusão: Dezembro/2025' },
+              { title: 'Bacharelado em Engenharia de Software - FIAP', note: 'Conclusão: Agosto/2029' }
+            ],
+            languages: [
+              'Inglês - Intermediário (leitura técnica e comunicação básica)',
+              'Espanhol - Intermediário (leitura técnica e comunicação básica)'
+            ],
+            skills: [
+              ['Linguagens', 'HTML, CSS, JavaScript, TypeScript, Python, Java, SQL (Oracle)'],
+              ['Frameworks & Bibliotecas', 'React, React Native, Next.js, Tailwind CSS'],
+              ['Ferramentas', 'Git, Docker, Figma, Expo'],
+              ['Metodologias & Boas Práticas', 'SOLID, Clean Code']
+            ],
+            experience: [
+              {
+                title: 'Noweb Publicidade',
+                date: 'Abril/2026 - Atualmente',
+                role: 'Desenvolvedor Front-End / Mobile (React + React Native + Expo + TypeScript + Tailwind CSS)',
+                products: { label: 'Produtos', text: PRODUCTS },
+                bullets: [
+                  'Desenvolvimento e manutenção de aplicações web e mobile utilizando React, React Native e TypeScript.',
+                  'Desenvolvimento do aplicativo desktop do Pulso.',
+                  'Criação de interfaces modernas, responsivas e reutilizáveis com Tailwind CSS e CSS-in-JS.',
+                  'Integração de APIs REST para comunicação entre frontend e backend.',
+                  'Implementação de novas funcionalidades e evolução contínua dos sistemas.',
+                  'Correção de bugs, manutenção e otimização de performance das aplicações.',
+                  'Componentização de interfaces seguindo boas práticas de desenvolvimento.',
+                  'Colaboração com equipe de backend para entrega de soluções alinhadas aos requisitos do negócio.',
+                  'Versionamento de código com Git e participação no fluxo de desenvolvimento da equipe.'
+                ]
+              },
+              {
+                title: 'Projeto Acadêmico - SmartMottu',
+                date: '05/2025',
+                role: 'Desenvolvedor Full Stack (React Native + Expo + Java Spring Boot)',
+                text: 'Aplicativo para mapeamento inteligente de pátio e gestão de motos, com QR Code, visão computacional e mapa interativo.',
+                bullets: [
+                  'Implementação de sistema para gestão de motos com QR Code, visão computacional e mapeamento inteligente.',
+                  'Implementação de formulários com estado e armazenamento local via AsyncStorage.',
+                  'Integração com backend em Java Spring Boot e banco Oracle SQL.'
+                ]
+              },
+              {
+                title: 'Projeto Acadêmico - SafeHub',
+                date: '06/2025',
+                role: 'Desenvolvedor Mobile (React Native + Expo)',
+                text: 'Aplicativo para cadastro e mapeamento de abrigos com geolocalização e status de ocupação.',
+                bullets: [
+                  'Desenvolvimento de app para gestão de abrigos com geolocalização, status de ocupação e controle de estoque em desastres naturais.',
+                  'Implementação de geocodificação para transformar endereços em coordenadas.',
+                  'Integração com APIs OpenStreetMap, Nominatim e OpenRouteService para cálculo de rotas.',
+                  'Integração com backend em Java Spring Boot e banco de dados Oracle SQL.'
+                ]
+              },
+              {
+                title: 'Projeto Acadêmico - Enova',
+                date: '12/2024',
+                role: 'Desenvolvedor Front-End (Next.js)',
+                text: 'Plataforma web para monitoramento e gestão de sistemas de energia renovável.',
+                bullets: [
+                  'Refatoração de SPA (Single Page Application) para SSR (Server-Side Rendering), aumentando desempenho e SEO.',
+                  'Desenvolvimento de interface responsiva com Next.js e Tailwind CSS.',
+                  'Integração de APIs e implementação de recursos de análise de dados energéticos.',
+                  'Processamento e cálculos de eficiência com Python e Java.',
+                  'Integração com banco de dados Oracle SQL e dashboard para visualização de métricas.'
+                ]
+              },
+              {
+                title: 'Projeto Freelancer - Dashboard Financeiro',
+                date: '12/2024',
+                role: 'Desenvolvedor Front-End (Vue.js + Tailwind CSS)',
+                text: 'Painel de controle responsivo para gestão de finanças pessoais.',
+                bullets: [
+                  'Implementação de interface moderna e responsiva para visualização de receitas e despesas.',
+                  'Aplicação de conceitos de UX/UI e boas práticas de design responsivo.',
+                  'Organização de dados em gráficos e tabelas interativos.',
+                  'Utilização de Tailwind CSS para padronização e consistência visual.'
+                ]
+              }
+            ],
+            complementary: [
+              'HTML e CSS para projetos web - Alura - 2024',
+              'JavaScript para aplicações web - Alura - 2024',
+              'TypeScript no Front-End - Alura - 2024',
+              'React com JSX e Hooks - Alura - 2024',
+              'Python para Machine Learning - DIO - 2025'
+            ]
+          },
+
+          en: {
+            htmlLang: 'en',
+            title: 'Resume | Victor Henrique Estrella Carracci',
+            ui: { back: 'Back to portfolio', download: 'Download PDF', print: 'Print' },
+            pdf: { href: '/curriculo-victor-carracci-en.pdf', name: 'Resume-Victor-Carracci.pdf' },
+            location: 'São Paulo – SP, Brazil',
+            contactLabels: { email: 'Email', phone: 'Phone', linkedin: 'LinkedIn', github: 'GitHub', site: 'Portfolio' },
+            headings: {
+              objective: 'Objective',
+              summary: 'Professional Summary',
+              education: 'Education',
+              languages: 'Languages',
+              skills: 'Technical Skills',
+              experience: 'Professional Experience',
+              complementary: 'Additional Training'
+            },
+            objective: 'Internship / Junior Software Developer',
+            summary:
+              'Front-End Developer with professional experience building web and mobile applications with React, React Native, Next.js and TypeScript. Experience creating responsive interfaces, integrating REST APIs, developing new features and maintaining systems. Knowledge of JavaScript, Tailwind CSS, Git, Docker and best practices such as Clean Code and SOLID. Looking to contribute scalable, high-quality solutions with a strong focus on user experience.',
+            education: [
+              { title: "Associate Degree in Systems Analysis and Development - FIAP", note: 'Completed: December 2025' },
+              { title: "Bachelor's Degree in Software Engineering - FIAP", note: 'Expected completion: August 2029' }
+            ],
+            languages: [
+              'English - Intermediate (technical reading and basic communication)',
+              'Spanish - Intermediate (technical reading and basic communication)'
+            ],
+            skills: [
+              ['Languages', 'HTML, CSS, JavaScript, TypeScript, Python, Java, SQL (Oracle)'],
+              ['Frameworks & Libraries', 'React, React Native, Next.js, Tailwind CSS'],
+              ['Tools', 'Git, Docker, Figma, Expo'],
+              ['Methodologies & Best Practices', 'SOLID, Clean Code']
+            ],
+            experience: [
+              {
+                title: 'Noweb Publicidade',
+                date: 'April 2026 - Present',
+                role: 'Front-End / Mobile Developer (React + React Native + Expo + TypeScript + Tailwind CSS)',
+                products: { label: 'Products', text: PRODUCTS },
+                bullets: [
+                  'Development and maintenance of web and mobile applications using React, React Native and TypeScript.',
+                  'Development of the Pulso desktop application.',
+                  'Built modern, responsive and reusable interfaces with Tailwind CSS and CSS-in-JS.',
+                  'Integrated REST APIs for communication between front-end and back-end.',
+                  'Implemented new features and continuously evolved the systems.',
+                  'Bug fixing, maintenance and performance optimization of the applications.',
+                  'Interface componentization following development best practices.',
+                  'Collaboration with the back-end team to deliver solutions aligned with business requirements.',
+                  "Code versioning with Git and participation in the team's development workflow."
+                ]
+              },
+              {
+                title: 'Academic Project - SmartMottu',
+                date: '05/2025',
+                role: 'Full Stack Developer (React Native + Expo + Java Spring Boot)',
+                text: 'App for smart yard mapping and motorcycle management, with QR Code, computer vision and an interactive map.',
+                bullets: [
+                  'Implemented a motorcycle management system with QR Code, computer vision and smart mapping.',
+                  'Implemented stateful forms and local storage with AsyncStorage.',
+                  'Integration with a Java Spring Boot back-end and Oracle SQL database.'
+                ]
+              },
+              {
+                title: 'Academic Project - SafeHub',
+                date: '06/2025',
+                role: 'Mobile Developer (React Native + Expo)',
+                text: 'App for registering and mapping shelters with geolocation and occupancy status.',
+                bullets: [
+                  'Built an app to manage shelters in natural disasters, with geolocation, occupancy status and inventory control.',
+                  'Implemented geocoding to convert addresses into coordinates.',
+                  'Integration with the OpenStreetMap, Nominatim and OpenRouteService APIs for route calculation.',
+                  'Integration with a Java Spring Boot back-end and Oracle SQL database.'
+                ]
+              },
+              {
+                title: 'Academic Project - Enova',
+                date: '12/2024',
+                role: 'Front-End Developer (Next.js)',
+                text: 'Web platform for monitoring and managing renewable energy systems.',
+                bullets: [
+                  'Refactored a SPA (Single Page Application) to SSR (Server-Side Rendering), improving performance and SEO.',
+                  'Built a responsive interface with Next.js and Tailwind CSS.',
+                  'API integration and implementation of energy data analysis features.',
+                  'Efficiency processing and calculations with Python and Java.',
+                  'Integration with an Oracle SQL database and a metrics dashboard.'
+                ]
+              },
+              {
+                title: 'Freelance Project - Financial Dashboard',
+                date: '12/2024',
+                role: 'Front-End Developer (Vue.js + Tailwind CSS)',
+                text: 'Responsive control panel for personal finance management.',
+                bullets: [
+                  'Built a modern, responsive interface to visualize income and expenses.',
+                  'Applied UX/UI concepts and responsive design best practices.',
+                  'Organized data into interactive charts and tables.',
+                  'Used Tailwind CSS for visual standardization and consistency.'
+                ]
+              }
+            ],
+            complementary: [
+              'HTML and CSS for web projects - Alura - 2024',
+              'JavaScript for web applications - Alura - 2024',
+              'TypeScript on the Front-End - Alura - 2024',
+              'React with JSX and Hooks - Alura - 2024',
+              'Python for Machine Learning - DIO - 2025'
+            ]
+          }
+        }
+
+        /* ------------------------------------------------------------------ */
+        /*  Renderização                                                       */
+        /* ------------------------------------------------------------------ */
+        function esc(value) {
+          return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+        }
+
+        function list(items) {
+          return '<ul>' + items.map(function (item) { return '<li>' + esc(item) + '</li>' }).join('') + '</ul>'
+        }
+
+        function render(c) {
+          var L = c.contactLabels
+          var item = function (label, value, href) {
+            var inner = href ? '<a href="' + href + '">' + esc(value) + '</a>' : esc(value)
+            return '<span class="item">' + (label ? esc(label) + ': ' : '') + inner + '</span>'
+          }
+          var contact = [
+            item('', c.location),
+            item(L.email, EMAIL, 'mailto:' + EMAIL),
+            item(L.linkedin, LINKEDIN, LINKEDIN),
+            item(L.phone, PHONE),
+            item(L.github, GITHUB, GITHUB),
+            item(L.site, SITE, SITE)
+          ].join('')
+
+          var H = c.headings
+          var html = ''
+          html += '<h1>Victor Henrique Estrella Carracci</h1>'
+          html += '<p class="contact">' + contact + '</p>'
+
+          html += '<h2>' + esc(H.objective) + '</h2><p>' + esc(c.objective) + '</p>'
+          html += '<h2>' + esc(H.summary) + '</h2><p>' + esc(c.summary) + '</p>'
+
+          html += '<h2>' + esc(H.education) + '</h2>'
+          c.education.forEach(function (e) {
+            html += '<div class="entry"><div class="entry-title">' + esc(e.title) + '</div><div class="meta">' + esc(e.note) + '</div></div>'
+          })
+
+          html += '<h2>' + esc(H.languages) + '</h2>' + list(c.languages)
+
+          html += '<h2>' + esc(H.skills) + '</h2>'
+          c.skills.forEach(function (s) {
+            html += '<p class="skill-row"><b>' + esc(s[0]) + ':</b> ' + esc(s[1]) + '</p>'
+          })
+
+          html += '<h2>' + esc(H.experience) + '</h2>'
+          c.experience.forEach(function (x) {
+            html += '<div class="entry">'
+            html += '<div class="entry-head"><span class="entry-title">' + esc(x.title) + '</span><span class="entry-date">' + esc(x.date) + '</span></div>'
+            html += '<p class="role">' + esc(x.role) + '</p>'
+            if (x.text) html += '<p>' + esc(x.text) + '</p>'
+            if (x.products) html += '<p class="products"><b>' + esc(x.products.label) + ':</b> ' + esc(x.products.text) + '</p>'
+            html += list(x.bullets)
+            html += '</div>'
+          })
+
+          html += '<h2>' + esc(H.complementary) + '</h2>' + list(c.complementary)
+          return html
+        }
+
+        /* ------------------------------------------------------------------ */
+        /*  Idioma: ?lang= > escolha salva > idioma do navegador               */
+        /* ------------------------------------------------------------------ */
+        function initialLang() {
+          var q = new URLSearchParams(location.search).get('lang')
+          if (q === 'pt' || q === 'en') return q
+          try {
+            var saved = localStorage.getItem('cv-lang')
+            if (saved === 'pt' || saved === 'en') return saved
+          } catch (e) {}
+          return /^pt/i.test(navigator.language || '') ? 'pt' : 'en'
+        }
+
+        function apply(lang, persist) {
+          var c = CV[lang]
+          document.documentElement.lang = c.htmlLang
+          document.documentElement.setAttribute('data-lang', lang)
+          document.title = c.title
+          document.getElementById('cv').innerHTML = render(c)
+          document.getElementById('t-back').textContent = c.ui.back
+          document.getElementById('t-download').textContent = c.ui.download
+          document.getElementById('t-print').textContent = c.ui.print
+
+          // O botão baixa o PDF do idioma que está na tela
+          var dl = document.getElementById('download')
+          dl.setAttribute('href', c.pdf.href)
+          dl.setAttribute('download', c.pdf.name)
+
+          document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+            btn.setAttribute('aria-pressed', String(btn.getAttribute('data-set-lang') === lang))
+          })
+
+          if (persist) {
+            try { localStorage.setItem('cv-lang', lang) } catch (e) {}
+            var url = new URL(location.href)
+            url.searchParams.set('lang', lang)
+            history.replaceState(null, '', url)
+          }
+        }
+
+        document.querySelectorAll('[data-set-lang]').forEach(function (btn) {
+          btn.addEventListener('click', function () { apply(btn.getAttribute('data-set-lang'), true) })
+        })
+        document.getElementById('print').addEventListener('click', function () { window.print() })
+
+        apply(initialLang(), false)
+      })()
+    </script>
+  </body>
+</html>

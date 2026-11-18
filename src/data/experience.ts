@@ -1,6 +1,7 @@
 import cageLogo from '@/assets/products/cage.webp'
 import pulsoLogo from '@/assets/products/pulso.webp'
 import ponticLogo from '@/assets/products/pontic.webp'
+import trevoLogo from '@/assets/products/trevo.svg'
 
 /**
  * Experiência profissional.
@@ -18,6 +19,8 @@ export type Product = {
   name: string
   /** imagem da logo oficial (opcional) — sem ela é exibido um monograma */
   logo?: string
+  /** logo vetorial sem fundo próprio: aparece com respiro sobre o tile escuro */
+  logoPadded?: boolean
   /** monograma exibido quando não há logo */
   monogram: string
   /** matiz (0–360) do monograma — apenas visual, não é a cor oficial da marca */
@@ -58,11 +61,20 @@ export const experience: Role[] = [
       'Versionamento com Git no fluxo de desenvolvimento do time',
     ],
     products: [
-      { name: 'Cage CRM', logo: cageLogo, monogram: 'C', hue: 290 },
-      { name: 'Cage Mobile', logo: cageLogo, monogram: 'C', hue: 290 },
-      { name: 'Pulso', logo: pulsoLogo, monogram: 'P', hue: 120 },
-      { name: 'Pontic', logo: ponticLogo, monogram: 'P', hue: 350 },
-      { name: 'Pontic Mobile', logo: ponticLogo, monogram: 'P', hue: 350 },
+      { name: 'Cage CRM', logo: cageLogo, monogram: 'C', hue: 250 },
+      { name: 'Cage Mobile', logo: cageLogo, monogram: 'C', hue: 250 },
+      { name: 'Pulso', logo: pulsoLogo, monogram: 'P', hue: 230 },
+      { name: 'Pulso Mobile', logo: pulsoLogo, monogram: 'P', hue: 230 },
+      {
+        name: 'Pulso Desktop',
+        logo: pulsoLogo,
+        monogram: 'P',
+        hue: 230,
+        description: 'Aplicativo desktop do Pulso, desenvolvido por mim.',
+      },
+      { name: 'Pontic', logo: ponticLogo, monogram: 'P', hue: 245 },
+      { name: 'Pontic Mobile', logo: ponticLogo, monogram: 'P', hue: 245 },
+      { name: 'Trevo', logo: trevoLogo, logoPadded: true, monogram: 'T', hue: 240 },
     ],
   },
 ]

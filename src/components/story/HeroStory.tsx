@@ -15,7 +15,7 @@ import { useSmoothScroll } from '@/hooks/useSmoothScroll'
 import Part from './Part'
 import { Ink, PhoneCard, PhoneHeader, PhoneRow, PhoneTabBar } from './mocks'
 import { LayerComponents, LayerContent, LayerData, LayerInteraction, LayerLayout, LayerTag } from './layers'
-import { INK, VIOLET } from './palette'
+import { INK, NAVY } from './palette'
 import { FINALE, K, LAYERS, focusAt, stepAt } from './storyData'
 
 /**
@@ -316,7 +316,7 @@ function PhoneFinale({ p }: { p: MotionValue<number> }) {
         </div>
         <div className="mt-5 flex flex-col gap-4 px-6">
           <PhoneRow dot={INK} />
-          <PhoneRow dot={VIOLET} />
+          <PhoneRow dot={NAVY} />
           <PhoneRow dot={INK} />
         </div>
         <div className="absolute inset-x-5 bottom-5">

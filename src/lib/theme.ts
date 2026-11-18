@@ -3,7 +3,7 @@ import { useCallback, useSyncExternalStore } from 'react'
 export type Theme = 'light' | 'dark'
 
 const STORAGE_KEY = 'theme'
-const THEME_COLORS: Record<Theme, string> = { light: '#f8f9fb', dark: '#0b0c0f' }
+const THEME_COLORS: Record<Theme, string> = { light: '#f1f7ff', dark: '#0a1226' }
 const listeners = new Set<() => void>()
 
 function readStored(): Theme | null {

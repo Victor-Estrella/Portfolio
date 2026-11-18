@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from 'motion/react'
-import { ArrowUpRight, Download, Menu, X } from 'lucide-react'
+import { ArrowUpRight, FileText, Menu, X } from 'lucide-react'
 
+import avatar from '@/assets/avatar.png'
 import SocialLinks from '@/components/SocialLinks'
 import ThemeToggle from '@/components/layout/ThemeToggle'
 import { Button, buttonVariants } from '@/components/ui/button'
@@ -75,9 +76,13 @@ export default function Navbar() {
             className="group flex shrink-0 items-center gap-2.5 rounded-full pr-2 pl-1 outline-none"
             aria-label="Ir para o início"
           >
-            <span className="grid size-8 place-items-center rounded-full bg-[linear-gradient(135deg,var(--primary),var(--accent))] font-display text-xs font-bold text-primary-foreground transition-transform duration-300 group-hover:rotate-[-8deg]">
-              {profile.initials}
-            </span>
+            <img
+              src={avatar}
+              alt=""
+              width={36}
+              height={36}
+              className="size-9 shrink-0 rounded-full transition-transform duration-300 group-hover:rotate-[-8deg]"
+            />
             <span className="text-left text-sm leading-tight font-semibold tracking-tight">
               {profile.shortName}
               <span className="hidden text-[11px] font-normal text-muted-foreground sm:block">{profile.role}</span>
@@ -119,10 +124,9 @@ export default function Navbar() {
 
             <a
               href={profile.resumeUrl}
-              download={profile.resumeFileName}
               className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'hidden xl:inline-flex')}
             >
-              <Download className="size-3.5" />
+              <FileText className="size-3.5" />
               Currículo
             </a>
 
@@ -201,10 +205,9 @@ export default function Navbar() {
                 />
                 <a
                   href={profile.resumeUrl}
-                  download={profile.resumeFileName}
                   className="inline-flex h-11 items-center gap-2 rounded-full border border-border bg-foreground/[0.03] px-5 text-sm font-medium"
                 >
-                  <Download className="size-4" />
+                  <FileText className="size-4" />
                   Currículo
                 </a>
               </motion.li>

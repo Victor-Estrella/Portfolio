@@ -7,6 +7,8 @@ interface BrandMarkProps {
   monogram: string
   /** logo oficial — quando existe, substitui o monograma */
   logo?: string
+  /** dá respiro à logo (para vetores sem fundo próprio) */
+  padded?: boolean
   /** matiz do monograma; sem ele usa as cores do tema */
   hue?: number
   className?: string
@@ -17,7 +19,7 @@ interface BrandMarkProps {
  * Mostra a logo oficial quando disponível; caso contrário, um monograma
  * neutro (apenas decorativo, sem imitar a marca real).
  */
-export default function BrandMark({ name, monogram, logo, hue, className }: BrandMarkProps) {
+export default function BrandMark({ name, monogram, logo, padded, hue, className }: BrandMarkProps) {
   if (logo) {
     return (
       <span
@@ -26,7 +28,13 @@ export default function BrandMark({ name, monogram, logo, hue, className }: Bran
           className
         )}
       >
-        <img src={logo} alt={`Logo ${name}`} loading="lazy" decoding="async" className="size-full object-cover" />
+        <img
+          src={logo}
+          alt={`Logo ${name}`}
+          loading="lazy"
+          decoding="async"
+          className={cn('size-full', padded ? 'object-contain p-[18%]' : 'object-cover')}
+        />
       </span>
     )
   }

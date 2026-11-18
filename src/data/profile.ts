@@ -13,9 +13,11 @@ export const profile = {
   /** Stack principal exibida no Hero e em destaque nas Skills */
   coreStack: ['React', 'TypeScript', 'Next.js', 'React Native', 'Expo'],
 
-  /** PDF servido de `public/` — o link usa `download`, então o navegador baixa direto. */
-  resumeUrl: '/curriculo-victor-carracci.pdf',
-  resumeFileName: 'Curriculo-Victor-Carracci.pdf',
+  /**
+   * Currículo em HTML (PT/EN) servido de `public/curriculo.html`. Os PDFs são gerados a partir
+   * dele com `npm run resume:pdf`, e o botão "Baixar PDF" da própria página escolhe o idioma.
+   */
+  resumeUrl: '/curriculo.html',
 
   /** Frases digitadas no Hero (componente TextType) */
   typewriter: [

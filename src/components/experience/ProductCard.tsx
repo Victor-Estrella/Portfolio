@@ -25,6 +25,7 @@ export default function ProductCard({ product, company, index }: ProductCardProp
             name={product.name}
             monogram={product.monogram}
             logo={product.logo}
+            padded={product.logoPadded}
             hue={product.hue}
             className="size-11 text-base"
           />
